@@ -1,5 +1,7 @@
 # manager
 
+[![dependencies Status](https://david-dm.org/buckless/manager/status.png)](https://david-dm.org/buckless/manager)
+
 > Manage Buckless account 
 
 ## Build Setup
