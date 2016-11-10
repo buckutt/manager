@@ -1,3 +1,6 @@
+import 'material-design-lite/material.min.js';
+import 'material-design-lite/material.min.css';
+
 import Vue       from 'vue';
 import VueRouter from 'vue-router';
 import VueMdl    from 'vue-mdl';
@@ -5,7 +8,7 @@ import VueMdl    from 'vue-mdl';
 Vue.use(VueRouter);
 Vue.use(VueMdl);
 
-import Sidebar from './components/Sidebar.vue';
+import App     from './components/App.vue';
 import Home    from './components/Home.vue';
 
 const routes = [
@@ -17,10 +20,10 @@ const routes = [
 
 const router = new VueRouter({ routes });
 
-const App = Vue.extend({
+const app = Vue.extend({
     router,
-    components: { Sidebar },
-    template  : '<div><Sidebar></Sidebar><router-view></router-view></div>'
+    components: { App },
+    template  : '<App></App>'
 });
 
-new App().$mount('#app');
+new app().$mount('#app');
