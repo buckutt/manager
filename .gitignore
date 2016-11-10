@@ -2,3 +2,7 @@
 node_modules/
 dist/
 npm-debug.log
+public/build.js
+ssl/*
+!ssl/.gitkeep
+
