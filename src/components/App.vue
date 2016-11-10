@@ -8,11 +8,30 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import Sidebar from './Sidebar.vue';
 
 export default {
     components: {
         Sidebar
+    },
+
+    methods: {
+        ...mapActions([
+            'updateLogged'
+        ])
+    },
+
+    computed: {
+        ...mapState({
+            logged: state => state.global.logged
+        })
+    },
+
+    mounted() {
+        if (sessionStorage.hasOwnProperty('token')) {
+            this.updateLogged(true);
+        }
     }
 }
 </script>

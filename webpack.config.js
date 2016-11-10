@@ -23,8 +23,12 @@ module.exports = {
         exclude: /node_modules/,
         query  : {
             presets: ['es2015', 'stage-2'],
-            plugins: ['transform-runtime']
+            plugins: ['transform-runtime', 'add-module-exports']
         }
+      },
+      {
+          test  : /\.json$/,
+          loader: 'json'
       },
       {
         test   : /\.(png|jpg|gif|svg)$/,

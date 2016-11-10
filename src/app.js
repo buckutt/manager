@@ -10,8 +10,9 @@ Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueMdl);
 
-import App     from './components/App.vue';
-import Home    from './components/Home.vue';
+import App    from './components/App.vue';
+import Home   from './components/Home.vue';
+import Logout from './components/Logout.vue';
 
 import store from './store/index';
 
@@ -19,6 +20,10 @@ const routes = [
     {
         path     : '/',
         component: Home
+    },
+    {
+        path     : '/logout',
+        component: Logout
     }
 ];
 

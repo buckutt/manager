@@ -1,14 +1,32 @@
 <template>
-    <div class="sidebar mdl-layout__drawer">
-        <h1>Buckless</h1>
-        <nav class="mdl-navigation">
-            <router-link to="/" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
-                <i class="material-icons">home</i>
-                Accueil
-            </router-link>
-        </nav>
-    </div>
+    <transition name="slide">
+        <div class="sidebar mdl-layout__drawer" v-if="logged">
+            <h1>Buckless</h1>
+            <nav class="mdl-navigation">
+                <router-link to="/" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">home</i>
+                    Accueil
+                </router-link>
+                <router-link to="/logout" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">power_settings_new</i>
+                    Déconnexion
+                </router-link>
+            </nav>
+        </div>
+    </transition>
 </template>
+
+<script>
+import { mapState, mapActions } from 'vuex';
+
+export default {
+    computed: {
+        ...mapState({
+            logged: state => state.global.logged
+        })
+    }
+};
+</script>
 
 <style lang="sass">
     @import '../main.scss';
@@ -17,6 +35,8 @@
         background: #34495e;
         color: #fff;
         width: 200px;
+        float: left;
+        position: fixed;
 
         > h1 {
             font-size: 2.5rem;
@@ -37,5 +57,29 @@
                 }
             }
         }
+    }
+
+    .mdl-layout__content {
+        float: left;
+        height: 100%;
+        width: calc(100% - 200px);
+        margin-left: 200px;
+    }
+
+    .slide-enter-active, .slide-leave-active {
+        transition: all .5s ease;
+    }
+
+    .slide-enter-active + .container, .slide-leave-active + .container {
+        transition: all .5s ease;
+    }
+
+    .slide-enter, .slide-leave-active {
+        margin-left: -200px;
+    }
+
+    .slide-enter + .container, .slide-leave-active + .container {
+        margin-left: 0;
+        width: 100%;
     }
 </style>
