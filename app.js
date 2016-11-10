@@ -18,7 +18,8 @@ const options = {
     changeOrigin: true,
     secure: false,
     pathRewrite: {
-         '^/api' : '/services/manager'
+        '/api/login': '/services/login',
+        '^/api'     : '/services/manager'
     },
     logLevel: 'warn'
 };
