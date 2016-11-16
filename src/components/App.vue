@@ -1,7 +1,7 @@
 <template>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
         <Sidebar></Sidebar>
-        <main class="mdl-layout__content">
+        <main class="mdl-layout__content" :class="{ 'forcedMain': !logged }">
             <router-view></router-view>
         </main>
     </div>
@@ -35,3 +35,18 @@ export default {
     }
 }
 </script>
+
+<style lang="sass">
+    @import '../main.scss';
+
+    .mdl-card {
+        width: 90%;
+        max-width: 1400px;
+        margin: 50px auto;
+    }
+
+    .forcedMain {
+        width: 100%;
+        margin-left: 0px !important;
+    }
+</style>

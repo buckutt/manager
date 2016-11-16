@@ -80,15 +80,9 @@ export default {
 <style lang="sass">
     @import '../main.scss';
 
-    .mdl-layout__content {
-        margin-left: 0 !important;
-        width: 100% !important;
-    }
-
     .login {
         > div {
             width: 500px;
-            margin: 50px auto;
 
             .mdl-textfield {
                 width: 100%;

@@ -1,11 +1,11 @@
 <template>
     <transition name="slide">
-        <div class="sidebar mdl-layout__drawer" v-if="logged">
+        <div class="sidebar mdl-layout__drawer" v-show="logged">
             <h1>Buckless</h1>
             <nav class="mdl-navigation">
-                <router-link to="/" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
-                    <i class="material-icons">home</i>
-                    Accueil
+                <router-link to="/history" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">history</i>
+                    Historique
                 </router-link>
                 <router-link to="/logout" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
                     <i class="material-icons">power_settings_new</i>
@@ -35,8 +35,6 @@ export default {
         background: #34495e;
         color: #fff;
         width: 200px;
-        float: left;
-        position: fixed;
 
         > h1 {
             font-size: 2.5rem;
@@ -57,13 +55,6 @@ export default {
                 }
             }
         }
-    }
-
-    .mdl-layout__content {
-        float: left;
-        height: 100%;
-        width: calc(100% - 200px);
-        margin-left: 200px;
     }
 
     .slide-enter-active, .slide-leave-active {

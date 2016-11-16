@@ -10,9 +10,10 @@ Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueMdl);
 
-import App    from './components/App.vue';
-import Home   from './components/Home.vue';
-import Logout from './components/Logout.vue';
+import App     from './components/App.vue';
+import History from './components/History.vue';
+import Home    from './components/Home.vue';
+import Logout  from './components/Logout.vue';
 
 import store from './store/index';
 
@@ -20,6 +21,10 @@ const routes = [
     {
         path     : '/',
         component: Home
+    },
+    {
+        path     : '/history',
+        component: History
     },
     {
         path     : '/logout',
