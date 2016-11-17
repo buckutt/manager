@@ -148,16 +148,4 @@ export default {
             line-height: 1.2;
         }
     }
-
-    .name {
-        text-transform: capitalize
-    }
-
-    .fullwidth {
-        width: 100%;
-    }
-
-    .center {
-        text-align: center;
-    }
 </style>

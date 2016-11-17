@@ -6,10 +6,11 @@ import VueRouter from 'vue-router';
 import Vuex      from 'vuex';
 import VueMdl    from 'vue-mdl';
 
-import App     from './components/App.vue';
-import History from './components/History.vue';
-import Home    from './components/Home.vue';
-import Logout  from './components/Logout.vue';
+import App       from './components/App.vue';
+import ChangePin from './components/ChangePin.vue';
+import History   from './components/History.vue';
+import Home      from './components/Home.vue';
+import Logout    from './components/Logout.vue';
 
 import store from './store/index';
 
@@ -25,6 +26,10 @@ const routes = [
     {
         path     : '/history',
         component: History
+    },
+    {
+        path     : '/pin',
+        component: ChangePin
     },
     {
         path     : '/logout',

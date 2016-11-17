@@ -5,10 +5,10 @@
                 <div class="mdl-card__title">
                     <h2 class="mdl-card__title-text">Connexion</h2>
                 </div>
-                <form @submit.prevent="login(mail, password)">
+                <form @submit.prevent="login(mail, pin)">
                     <div class="mdl-card__supporting-text">
                         <mdl-textfield floating-label="Mail" v-model="mail"></mdl-textfield><br />
-                        <mdl-textfield type="password" floating-label="Mot de passe" v-model="password"></mdl-textfield>
+                        <mdl-textfield type="password" floating-label="Code PIN" v-model="pin"></mdl-textfield>
                     </div>
                     <div class="mdl-card__actions mdl-card--border">
                         <mdl-button colored>Connexion</mdl-button>
@@ -27,8 +27,8 @@ import { post, updateBearer }   from '../lib/fetch';
 export default {
     data () {
         return {
-            mail    : '',
-            password: ''
+            mail: '',
+            pin : ''
         };
     },
 
@@ -36,8 +36,8 @@ export default {
         ...mapActions([
             'updateLogged'
         ]),
-        login(mail, password) {
-            post('login', { meanOfLogin: 'etuMail', data: mail, password })
+        login(mail, pin) {
+            post('login', { meanOfLogin: 'etuMail', data: mail, pin })
                 .then(result => {
                     if (!result.isAPIError && result.user) {
                         sessionStorage.setItem('user', JSON.stringify(result.user));

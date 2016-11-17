@@ -7,6 +7,10 @@
                     <i class="material-icons">history</i>
                     Historique
                 </router-link>
+                <router-link to="/pin" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">lock_ouline</i>
+                    PIN
+                </router-link>
                 <router-link to="/logout" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
                     <i class="material-icons">power_settings_new</i>
                     Déconnexion
