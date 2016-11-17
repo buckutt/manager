@@ -1,4 +1,4 @@
-import 'material-design-lite/material.min.js';
+import 'material-design-lite/material.min';
 import 'material-design-lite/material.min.css';
 
 import Vue       from 'vue';
@@ -6,16 +6,16 @@ import VueRouter from 'vue-router';
 import Vuex      from 'vuex';
 import VueMdl    from 'vue-mdl';
 
-Vue.use(VueRouter);
-Vue.use(Vuex);
-Vue.use(VueMdl);
-
 import App     from './components/App.vue';
 import History from './components/History.vue';
 import Home    from './components/Home.vue';
 import Logout  from './components/Logout.vue';
 
 import store from './store/index';
+
+Vue.use(VueRouter);
+Vue.use(Vuex);
+Vue.use(VueMdl);
 
 const routes = [
     {
@@ -34,11 +34,11 @@ const routes = [
 
 const router = new VueRouter({ routes });
 
-const app = Vue.extend({
+const Manager = Vue.extend({
     router,
     store,
     components: { App },
     template  : '<App></App>'
 });
 
-new app().$mount('#app');
+new Manager().$mount('#app');

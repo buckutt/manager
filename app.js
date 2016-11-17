@@ -16,8 +16,8 @@ const options = {
         key     : fs.readFileSync('./ssl/client-key.pem', 'utf8')
     },
     changeOrigin: true,
-    secure: false,
-    pathRewrite: {
+    secure      : false,
+    pathRewrite : {
         '/api/login': '/services/login',
         '^/api'     : '/services/manager'
     },
@@ -26,7 +26,7 @@ const options = {
 
 compiler.watch({
     aggregateTimeout: 300,
-    poll: true
+    poll            : true
 }, (err, stats) => {
     if (err) {
         return console.log(err);

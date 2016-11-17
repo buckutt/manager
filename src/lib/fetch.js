@@ -28,7 +28,7 @@ export function get (url, opts_) {
 
     return fetch(`${api}/${url}`, opts)
         .then(res => res.json())
-        .then(results => {
+        .then((results) => {
             if (Array.isArray(results)) {
                 return results.filter(r => !r.isRemoved);
             } else if (!results.isRemoved) {

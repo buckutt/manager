@@ -1,0 +1,83 @@
+{
+    "extends": "airbnb/base",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true,
+        "mocha": true
+    },
+    "rules": {
+        // 4 chars instead of 2
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+
+        // Disable last comma
+        comma-dangle: ["error", "never"],
+
+        // Align object keys
+        "key-spacing": ["error", {
+            "align": "colon"
+        }],
+
+        // Max line length to 120
+        "max-len": ["warn", 120, 4],
+
+        // Disable no-multi-spaces for alignment
+        "no-multi-spaces": ["warn", {
+            "exceptions": {
+                "VariableDeclarator": true,
+                "Property": true,
+                "ImportDeclaration": true,
+                "AssignmentExpression": true
+            }
+        }],
+
+        // Allow reassign props to params
+        "no-param-reassign": ["error", { "props": false }],
+
+        // Allow console
+        "no-console": 0,
+
+        // Allow space before function paren
+        "space-before-function-paren": 0,
+
+        // Allow anonymous functions
+        "func-names": 0,
+
+        // 1TBS with single lines (arrow functions that does not return)
+        "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+
+        // Disable consistent return
+        "consistent-return": 0,
+
+        // Disable return in callbacks
+        "array-callback-return": 0,
+
+        // Other bracket spaces style
+        "array-bracket-spacing": 0,
+
+        // Require allowance
+        "global-require": 0,
+
+        // Dangle underscores allowance
+        "no-underscore-dangle": 0,
+
+        // Allow prototype builtins
+        "no-prototype-builtins": 0,
+
+        // Allow to simple export even there is only 1 function to export
+        "import/prefer-default-export": 0
+    }
+}
