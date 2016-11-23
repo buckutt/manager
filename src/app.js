@@ -11,6 +11,7 @@ import ChangePin from './components/ChangePin.vue';
 import History   from './components/History.vue';
 import Home      from './components/Home.vue';
 import Logout    from './components/Logout.vue';
+import Transfer  from './components/Transfer.vue';
 
 import store from './store/index';
 
@@ -30,6 +31,10 @@ const routes = [
     {
         path     : '/pin',
         component: ChangePin
+    },
+    {
+        path     : '/transfer',
+        component: Transfer
     },
     {
         path     : '/logout',
