@@ -8,7 +8,7 @@ const compiler = webpack(require('./webpack.config.js'));
 
 const options = {
     target: {
-        host    : 'localhost',
+        host    : process.env.API || 'localhost',
         port    : 3000,
         protocol: 'https:',
         ca      : fs.readFileSync('./ssl/ca-crt.pem', 'utf8'),
@@ -24,10 +24,7 @@ const options = {
     logLevel: 'warn'
 };
 
-compiler.watch({
-    aggregateTimeout: 300,
-    poll            : true
-}, (err, stats) => {
+const webpackLog = (err, stats) => {
     if (err) {
         return console.log(err);
     }
@@ -36,7 +33,16 @@ compiler.watch({
         chunks: false,
         colors: true
     }));
-});
+};
+
+if (process.env.WATCH) {
+    compiler.watch({
+        aggregateTimeout: 300,
+        poll            : true
+    }, webpackLog);
+} else {
+    compiler.run(webpackLog);
+}
 
 app.use('/', express.static('public'));
 
