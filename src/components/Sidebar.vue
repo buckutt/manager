@@ -1,6 +1,6 @@
 <template>
     <transition name="slide">
-        <div class="sidebar mdl-layout__drawer" v-show="logged">
+        <div class="b-sidebar mdl-layout__drawer" v-show="logged">
             <h1>Buckless</h1>
             <nav class="mdl-navigation">
                 <router-link to="/history" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
@@ -39,7 +39,7 @@ export default {
 <style lang="sass">
     @import '../main.scss';
 
-    .sidebar {
+    .b-sidebar {
         background: #34495e;
         color: #fff;
         width: 200px;

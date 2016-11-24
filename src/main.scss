@@ -32,26 +32,26 @@ html, body {
 }
 
 // Utils
-.name {
+.b--capitalized {
     text-transform: capitalize;
 }
 
-.fullwidth {
+.b--fullwidth {
     width: 100%;
 }
 
-.inputwidth {
+.b--inputwidth {
     width: calc(100% - 20px);
     margin-left: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-.center {
+.b--center {
     text-align: center;
 }
 
-.centerBlock {
+.b--centered {
     margin: auto;
 }
 

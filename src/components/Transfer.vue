@@ -1,22 +1,22 @@
 <template>
-    <div class="transfer centerBlock">
+    <div class="b-transfer b--centered">
         <div class="mdl-card mdl-shadow--2dp">
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text">Réaliser un virement</h2>
             </div>
             <form @submit.prevent="dispatch(name, currentPin, amount, selectedUser)">
-                <div class="mdl-card__supporting-text fullwidth">
-                    <mdl-textfield floating-label="Destinataire" v-model="name" class="inputwidth" v-if="usersFound.length < 1"></mdl-textfield>
-                    <mdl-textfield floating-label="Destinataire" v-model="name" class="inputwidth" v-if="usersFound.length == 1" readonly></mdl-textfield>
-                    <mdl-select label="Destinataire" id="user-select" class="inputwidth" v-model="selectedUser" :options="userOptions" v-if="usersFound.length > 1"></mdl-select>
+                <div class="mdl-card__supporting-text b--fullwidth">
+                    <mdl-textfield floating-label="Destinataire" v-model="name" class="b--inputwidth" v-if="usersFound.length < 1"></mdl-textfield>
+                    <mdl-textfield floating-label="Destinataire" v-model="name" class="b--inputwidth" v-if="usersFound.length == 1" readonly></mdl-textfield>
+                    <mdl-select label="Destinataire" id="user-select" class="b--inputwidth" v-model="selectedUser" :options="userOptions" v-if="usersFound.length > 1"></mdl-select>
                     <br />
-                    <mdl-textfield type="password" floating-label="Code PIN actuel" v-model="currentPin" class="inputwidth"></mdl-textfield><br />
-                    <mdl-textfield floating-label="Montant" v-model="amount" class="inputwidth"></mdl-textfield>
+                    <mdl-textfield type="password" floating-label="Code PIN actuel" v-model="currentPin" class="b--inputwidth"></mdl-textfield><br />
+                    <mdl-textfield floating-label="Montant" v-model="amount" class="b--inputwidth"></mdl-textfield>
                 </div>
                 <div class="mdl-card__actions mdl-card--border" transition="fade">
-                    <mdl-button type="button" colored raised class="mdl-js-ripple-effect inputwidth" @click.native="cancel" v-show="usersFound.length > 0">Annuler</mdl-button>
-                    <mdl-button colored raised class="mdl-js-ripple-effect inputwidth" v-if="usersFound.length < 1">Rechercher</mdl-button>
-                    <mdl-button colored raised class="mdl-js-ripple-effect inputwidth" v-else>Valider</mdl-button>
+                    <mdl-button type="button" colored raised class="mdl-js-ripple-effect b--inputwidth" @click.native="cancel" v-show="usersFound.length > 0">Annuler</mdl-button>
+                    <mdl-button colored raised class="mdl-js-ripple-effect b--inputwidth" v-if="usersFound.length < 1">Rechercher</mdl-button>
+                    <mdl-button colored raised class="mdl-js-ripple-effect b--inputwidth" v-else>Valider</mdl-button>
                 </div>
             </form>
         </div>
@@ -153,7 +153,7 @@ export default {
 <style lang="sass">
     @import '../main.scss';
 
-    .transfer {
+    .b-transfer {
         max-width: 800px;
     }
 </style>

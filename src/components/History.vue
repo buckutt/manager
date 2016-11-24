@@ -1,16 +1,16 @@
 <template>
-    <div class="history">
+    <div class="b-history">
         <div class="mdl-card mdl-shadow--2dp">
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text">Historique</h2>
             </div>
-            <div class="mdl-card__supporting-text fullwidth">
-                <div class="fullwidth center pages" v-if="nbPages > 1">
+            <div class="mdl-card__supporting-text b--fullwidth">
+                <div class="b--fullwidth b--center b-history__pages" v-if="nbPages > 1">
                     <a href="#" @click.prevent="previous()" :class="{ visible: isPrevious }">Précedent</a>
                     <span>Page {{ page }}/{{ nbPages }}</span>
                     <a href="#" @click.prevent="next()" :class="{ visible: isNext }">Suivant</a>
                 </div>
-                <table class="mdl-data-table mdl-js-data-table mdl-shadow--1dp fullwidth">
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--1dp b--fullwidth">
                     <thead>
                         <tr>
                             <th class="mdl-data-table__cell--non-numeric">Date</th>
@@ -30,11 +30,11 @@
                             <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'purchase'">{{ item.articles[0] }}</td>
                             <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'promotion'">
                                 {{ item.promotion }}
-                                <ul v-if="item.articles.length > 1" class="promotion">
+                                <ul v-if="item.articles.length > 1" class="b-history__promotion">
                                     <li v-for="article in item.articles">{{ article }}</li>
                                 </ul>
                             </td>
-                            <td class="mdl-data-table__cell--non-numeric name">Opérateur {{ item.seller.firstname }} {{ item.seller.lastname }}</td>
+                            <td class="mdl-data-table__cell--non-numeric b--capitalized">Opérateur {{ item.seller.firstname }} {{ item.seller.lastname }}</td>
                             <td>{{ item.amount | price(true) }}</td>
                         </tr>
                     </tbody>
@@ -117,7 +117,7 @@ export default {
 <style lang="sass">
     @import '../main.scss';
 
-    .history .pages {
+    .b-history__pages {
         display: flex;
         margin-bottom: 5px;
 
@@ -138,7 +138,7 @@ export default {
         }
     }
 
-    .history .promotion {
+    .b-history__promotion {
         margin-top: 2px;
         margin-bottom: 0px;
         padding-left: 25px;

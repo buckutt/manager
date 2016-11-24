@@ -1,6 +1,6 @@
 <template>
-    <div class="home">
-        <div class="login">
+    <div class="b-home">
+        <div class="b-home__login">
             <div class="mdl-card mdl-shadow--2dp">
                 <div class="mdl-card__title">
                     <h2 class="mdl-card__title-text">Connexion</h2>
@@ -80,7 +80,7 @@ export default {
 <style lang="sass">
     @import '../main.scss';
 
-    .login {
+    .b-home__login {
         > div {
             width: 500px;
 

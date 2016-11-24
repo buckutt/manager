@@ -1,7 +1,7 @@
 <template>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
         <Sidebar></Sidebar>
-        <main class="mdl-layout__content" :class="{ 'forcedMain': !logged }">
+        <main class="mdl-layout__content" :class="{ 'b-forcedMain': !logged }">
             <router-view></router-view>
         </main>
     </div>
@@ -45,7 +45,7 @@ export default {
         margin: 50px auto;
     }
 
-    .forcedMain {
+    .b-forcedMain {
         width: 100%;
         margin-left: 0px !important;
     }
