@@ -12,4 +12,4 @@ RUN npm install && \
     npm build
 
 EXPOSE 8083
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "serve"]
