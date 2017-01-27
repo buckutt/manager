@@ -1,10 +1,8 @@
-const webpack   = require('webpack');
 const express   = require('express');
 const proxy     = require('http-proxy-middleware');
 const fs        = require('fs');
 
 const app      = express();
-const compiler = webpack(require('./webpack.config.js'));
 
 const options = {
     target: {
@@ -23,26 +21,6 @@ const options = {
     },
     logLevel: 'warn'
 };
-
-const webpackLog = (err, stats) => {
-    if (err) {
-        return console.log(err);
-    }
-
-    console.log(stats.toString({
-        chunks: false,
-        colors: true
-    }));
-};
-
-if (process.env.WATCH) {
-    compiler.watch({
-        aggregateTimeout: 300,
-        poll            : true
-    }, webpackLog);
-} else {
-    compiler.run(webpackLog);
-}
 
 app.use('/', express.static('public'));
 
