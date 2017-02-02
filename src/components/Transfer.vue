@@ -25,7 +25,8 @@
 </template>
 
 <script>
-import { get, post } from '../lib/fetch';
+import { mapState, mapActions } from 'vuex';
+import { get, post }            from '../lib/fetch';
 
 export default {
     data () {
@@ -39,6 +40,9 @@ export default {
     },
 
     methods: {
+        ...mapActions([
+            'updateLoggedUser'
+        ]),
         cancel() {
             this.usersFound   = [];
             this.selectedUser = '';
@@ -88,6 +92,11 @@ export default {
                     });
                     return;
                 }
+
+                const newUser  = this.loggedUser;
+                newUser.credit = result.newCredit;
+
+                this.updateLoggedUser(newUser);
 
                 this.cancel();
 
@@ -139,6 +148,9 @@ export default {
     },
 
     computed: {
+        ...mapState({
+            loggedUser: state => state.global.loggedUser
+        }),
         userOptions() {
             let users = this.usersFound.map(user => {
                 return { name: `${user.firstname} ${user.lastname}`, value: user.id };

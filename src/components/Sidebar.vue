@@ -2,6 +2,7 @@
     <transition name="slide">
         <div class="b-sidebar mdl-layout__drawer" v-show="logged">
             <h1>Buckless</h1>
+            <span class="b-sidebar__credit">Solde: {{ loggedUser.credit | price(true) }}</span>
             <nav class="mdl-navigation">
                 <router-link to="/history" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
                     <i class="material-icons">history</i>
@@ -30,7 +31,8 @@ import { mapState, mapActions } from 'vuex';
 export default {
     computed: {
         ...mapState({
-            logged: state => state.global.logged
+            logged    : state => state.global.logged,
+            loggedUser: state => state.global.loggedUser
         })
     }
 };
@@ -43,6 +45,10 @@ export default {
         background: #34495e;
         color: #fff;
         width: 200px;
+
+        > .b-sidebar__credit {
+            margin-left: 20px;
+        }
 
         > h1 {
             font-size: 2.5rem;

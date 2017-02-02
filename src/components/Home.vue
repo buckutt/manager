@@ -34,16 +34,16 @@ export default {
 
     methods: {
         ...mapActions([
-            'updateLogged'
+            'updateLogged',
+            'updateLoggedUser'
         ]),
         login(mail, pin) {
             post('login', { meanOfLogin: 'etuMail', data: mail, pin })
                 .then(result => {
                     if (!result.isAPIError && result.user) {
-                        sessionStorage.setItem('user', JSON.stringify(result.user));
                         sessionStorage.setItem('token', result.token);
-                        this.isToken = true;
                         this.updateLogged(true);
+                        this.updateLoggedUser(result.user);
                         updateBearer(result.token);
 
                         this.$router.push('/history');

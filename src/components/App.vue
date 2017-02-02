@@ -9,7 +9,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import Sidebar from './Sidebar.vue';
+import Sidebar                  from './Sidebar.vue';
 
 export default {
     components: {
@@ -18,7 +18,8 @@ export default {
 
     methods: {
         ...mapActions([
-            'updateLogged'
+            'updateLogged',
+            'updateLoggedUser'
         ])
     },
 
@@ -31,6 +32,7 @@ export default {
     mounted() {
         if (sessionStorage.hasOwnProperty('token')) {
             this.updateLogged(true);
+            this.updateLoggedUser(JSON.parse(sessionStorage.getItem('user')));
         }
     }
 }
