@@ -48,6 +48,14 @@ const routes = [
 
 const router = new VueRouter({ routes });
 
+router.beforeEach((route, from, next) => {
+    if ((route.path !== '/' && route.path !== '/generate') && !router.app.$store.state.global.logged) {
+        next('/');
+    } else {
+        next();
+    }
+});
+
 const Manager = Vue.extend({
     router,
     store,
