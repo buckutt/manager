@@ -15,6 +15,10 @@ import Transfer  from './components/Transfer.vue';
 
 import store from './store/index';
 
+if (navigator.serviceWorker) {
+    navigator.serviceWorker.register('/sw.js');
+}
+
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueMdl);

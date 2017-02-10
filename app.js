@@ -22,6 +22,12 @@ const options = {
     logLevel: 'warn'
 };
 
+app.use('/manifest.json', (req, res) => {
+    res
+        .status(200)
+        .json(require('./manifest'));
+});
+
 app.use('/', express.static('public'));
 
 app.use('/api/*', proxy(options));

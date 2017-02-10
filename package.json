@@ -13,7 +13,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "webpack",
+    "build": "cross-env NODE_ENV=production webpack",
     "start": "node app",
     "start:watch": "cross-env WATCH=1 node app",
     "lint": "eslint .",
@@ -32,7 +32,7 @@
     "vue-mdl": "^1.0.0-alpha.1",
     "vue-router": "^2.0.1",
     "vuex": "^2.0.0",
-    "webpack": "^2.1.0-beta.25"
+    "webpack": "^2.2.1"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -42,20 +42,20 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-2": "^6.18.0",
     "babel-runtime": "^6.9.2",
-    "cross-env": "^3.0.0",
-    "css-loader": "^0.25.0",
+    "css-loader": "^0.26.1",
     "eslint": "^3.1.1",
-    "eslint-config-airbnb": "^13.0.0",
+    "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
-    "file-loader": "^0.9.0",
+    "file-loader": "^0.10.0",
     "json-loader": "^0.5.4",
-    "node-sass": "^3.8.0",
-    "sass-loader": "^4.0.0",
+    "node-sass": "^4.5.0",
+    "sass-loader": "^5.0.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "vue-html-loader": "^1.2.3",
-    "vue-loader": "^9.7.0",
-    "vue-style-loader": "^1.0.0",
-    "webpack-dev-server": "^2.1.0-beta.0"
+    "vue-loader": "^10.3.0",
+    "vue-style-loader": "^2.0.0",
+    "vue-template-compiler": "^2.1.10",
+    "webpack-dev-server": "^2.3.0"
   }
 }
