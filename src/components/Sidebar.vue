@@ -8,6 +8,10 @@
                     <i class="material-icons">history</i>
                     Historique
                 </router-link>
+                <router-link to="/reload" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">attach_money</i>
+                    Rechargement
+                </router-link>
                 <router-link to="/pin" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
                     <i class="material-icons">lock_ouline</i>
                     PIN
