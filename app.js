@@ -1,17 +1,16 @@
-const express   = require('express');
-const proxy     = require('http-proxy-middleware');
-const fs        = require('fs');
+const express = require('express');
+const proxy   = require('http-proxy-middleware');
+const fs      = require('fs');
 
-const app      = express();
+const app     = express();
 
 const options = {
     target: {
-        host    : process.env.API || 'localhost',
-        port    : 3000,
+        host    : (process.env.NODE_ENV === 'production') ? 'nginx_service' : 'localhost',
+        port    : (process.env.NODE_ENV === 'production') ? 443 : 3000,
         protocol: 'https:',
-        ca      : fs.readFileSync('./ssl/ca-crt.pem', 'utf8'),
-        cert    : fs.readFileSync('./ssl/client-crt.pem', 'utf8'),
-        key     : fs.readFileSync('./ssl/client-key.pem', 'utf8')
+        key     : fs.readFileSync('./ssl/manager-key.pem', 'utf8'),
+        cert    : fs.readFileSync('./ssl/manager-crt.pem', 'utf8')
     },
     changeOrigin: true,
     secure      : false,

@@ -14,7 +14,8 @@
   "private": true,
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
-    "start": "node app",
+    "start:production": "cross-env NODE_ENV=production node app",
+    "start:dev": "cross-env NODE_ENV=dev node app",
     "start:watch": "cross-env WATCH=1 node app",
     "lint": "eslint .",
     "serve": "static public/ -a 0.0.0.0 -p 8083"
