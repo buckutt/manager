@@ -83,7 +83,7 @@ export default {
                         this.confirmedPin = '';
 
                         const cData = {
-                            message: 'Le mot de passe a bien été changé',
+                            message: 'Le code PIN a bien été changé',
                             timeout: 3000
                         };
 

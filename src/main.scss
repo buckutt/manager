@@ -55,6 +55,18 @@ html, body {
     margin: auto;
 }
 
+.b--clear {
+    clear: both;
+}
+
+.b--right {
+    float: right;
+}
+
+.b--left {
+    float: left;
+}
+
 // Transitions
 .fade-enter-active, .fade-leave-active {
     transition: opacity .4s ease;

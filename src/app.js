@@ -6,12 +6,13 @@ import VueRouter from 'vue-router';
 import Vuex      from 'vuex';
 import VueMdl    from 'vue-mdl';
 
-import App       from './components/App.vue';
-import ChangePin from './components/ChangePin.vue';
-import History   from './components/History.vue';
-import Home      from './components/Home.vue';
-import Logout    from './components/Logout.vue';
-import Transfer  from './components/Transfer.vue';
+import App         from './components/App.vue';
+import ChangePin   from './components/ChangePin.vue';
+import GeneratePin from './components/GeneratePin.vue';
+import History     from './components/History.vue';
+import Home        from './components/Home.vue';
+import Logout      from './components/Logout.vue';
+import Transfer    from './components/Transfer.vue';
 
 import store from './store/index';
 
@@ -35,6 +36,10 @@ const routes = [
     {
         path     : '/pin',
         component: ChangePin
+    },
+    {
+        path     : '/generate',
+        component: GeneratePin
     },
     {
         path     : '/transfer',

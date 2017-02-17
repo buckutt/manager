@@ -11,7 +11,11 @@
                         <mdl-textfield type="password" floating-label="Code PIN" v-model="pin"></mdl-textfield>
                     </div>
                     <div class="mdl-card__actions mdl-card--border">
-                        <mdl-button colored>Connexion</mdl-button>
+                        <mdl-button colored class="b--left">Connexion</mdl-button>
+                        <router-link to="/generate" class="mdl-button mdl-button--colored mdl-js-button b--right">
+                            PIN oublié
+                        </router-link>
+                        <div class="b--clear"></div>
                     </div>
                 </form>
             </div>
