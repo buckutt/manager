@@ -4,7 +4,7 @@ WORKDIR /usr/src/buckless-manager
 
 EXPOSE 8083
 
-CMD ["npm", "run", "start:production"]
+CMD ["npm", "run", "start"]
 
 RUN apk update && \
     apk add --no-cache git openssh make gcc g++ python && \
