@@ -6,7 +6,7 @@ import VueRouter from 'vue-router';
 import Vuex      from 'vuex';
 import VueMdl    from 'vue-mdl';
 
-import App         from './components/App.vue';
+import App         from './App.vue';
 import ChangePin   from './components/ChangePin.vue';
 import GeneratePin from './components/GeneratePin.vue';
 import History     from './components/History.vue';
@@ -17,7 +17,7 @@ import Transfer    from './components/Transfer.vue';
 import store from './store/index';
 
 if (navigator.serviceWorker) {
-    navigator.serviceWorker.register('/sw.js');
+    navigator.serviceWorker.register('/assets/sw.js');
 }
 
 Vue.use(VueRouter);

@@ -9,7 +9,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import Sidebar                  from './Sidebar.vue';
+import Sidebar                  from './components/Sidebar.vue';
 
 export default {
     components: {
@@ -38,8 +38,8 @@ export default {
 }
 </script>
 
-<style lang="sass">
-    @import '../main.scss';
+<style lang="scss">
+    @import './main.scss';
 
     .mdl-card {
         width: 90%;

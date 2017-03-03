@@ -162,7 +162,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="scss">
     @import '../main.scss';
 
     .b-transfer {
