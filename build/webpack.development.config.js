@@ -24,6 +24,6 @@ module.exports = merge(base, {
     ],
     devServer: {
         contentBase: utils.resolve('dist'),
-        port: 8082
+        port: 8083
     }
 });
