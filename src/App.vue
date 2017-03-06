@@ -35,7 +35,7 @@ export default {
             this.updateLoggedUser(JSON.parse(sessionStorage.getItem('user')));
         }
     }
-}
+};
 </script>
 
 <style lang="scss">

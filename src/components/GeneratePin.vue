@@ -40,7 +40,7 @@ import bcrypt       from 'bcryptjs';
 import { get, put } from '../lib/fetch';
 
 export default {
-    data () {
+    data() {
         return {
             mail        : '',
             pin         : '',
@@ -75,10 +75,10 @@ export default {
 
             bcrypt.hash(pin, 10, (err, hash) => {
                 put('generatepin', {
-                        key,
-                        pin: hash
-                    })
-                    .then(result => {
+                    key,
+                    pin: hash
+                })
+                    .then((result) => {
                         if (result.status) {
                             const eData = {
                                 message: 'Ce mail a déjà été utilisé pour changer de mot de passe.',
@@ -100,7 +100,7 @@ export default {
 
                         setTimeout(() => this.$router.push('/'), 1000);
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         this.$root.$emit('snackfilter', {
                             message: 'Une erreur inconnue a eu lieu',
                             timeout: 2000
@@ -111,7 +111,7 @@ export default {
         ask(mail) {
             this.loading = true;
             get(`askpin?mail=${mail}`)
-                .then(result => {
+                .then((result) => {
                     this.loading = false;
                     if (result.status) {
                         this.$root.$emit('snackfilter', {
@@ -126,7 +126,7 @@ export default {
                         timeout: 2000
                     });
                 })
-                .catch(err => {
+                .catch((err) => {
                     this.$root.$emit('snackfilter', {
                         message: 'Une erreur inconnue a eu lieu',
                         timeout: 2000
@@ -134,7 +134,7 @@ export default {
                 });
         }
     }
-}
+};
 </script>
 
 <style lang="scss">

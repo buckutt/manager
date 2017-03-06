@@ -24,7 +24,7 @@ import bcrypt  from 'bcryptjs';
 import { put } from '../lib/fetch';
 
 export default {
-    data () {
+    data() {
         return {
             currentPin  : '',
             pin         : '',
@@ -65,10 +65,10 @@ export default {
 
             bcrypt.hash(pin, 10, (err, hash) => {
                 put('changepin', {
-                        currentPin,
-                        pin: hash
-                    })
-                    .then(result => {
+                    currentPin,
+                    pin: hash
+                })
+                    .then((result) => {
                         if (!result.changed) {
                             const eData = {
                                 message: 'L\'ancien code est faux',
@@ -92,7 +92,7 @@ export default {
             });
         }
     }
-}
+};
 </script>
 
 <style lang="scss">

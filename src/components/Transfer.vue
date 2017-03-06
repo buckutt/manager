@@ -29,7 +29,7 @@ import { mapState, mapActions } from 'vuex';
 import { get, post }            from '../lib/fetch';
 
 export default {
-    data () {
+    data() {
         return {
             name        : '',
             currentPin  : '',
@@ -81,10 +81,10 @@ export default {
 
             post('transfer', {
                 currentPin,
-                amount       : amount * 100,
-                'Reciever_id': user
+                amount     : amount * 100,
+                Reciever_id: user
             })
-            .then(result => {
+            .then((result) => {
                 if (!result.newCredit) {
                     this.$root.$emit('snackfilter', {
                         message: result.message,
@@ -118,7 +118,7 @@ export default {
 
             const strName = encodeURIComponent(name);
 
-            get(`searchuser?name=${strName}`).then(users => {
+            get(`searchuser?name=${strName}`).then((users) => {
                 this.selectedUser = '';
 
                 if (users.length < 1) {
@@ -126,7 +126,7 @@ export default {
                         message: 'Aucun utilisateur n\'a été trouvé',
                         timeout: 2000
                     });
-                } else if(users.length == 1) {
+                } else if (users.length == 1) {
                     this.$root.$emit('snackfilter', {
                         message: 'Un utilisateur a été trouvé, veuillez confirmer',
                         timeout: 2000
@@ -152,14 +152,12 @@ export default {
             loggedUser: state => state.global.loggedUser
         }),
         userOptions() {
-            let users = this.usersFound.map(user => {
-                return { name: `${user.firstname} ${user.lastname}`, value: user.id };
-            });
+            const users = this.usersFound.map(user => ({ name: `${user.firstname} ${user.lastname}`, value: user.id }));
 
             return users;
         }
     }
-}
+};
 </script>
 
 <style lang="scss">

@@ -5,6 +5,7 @@ const base                  = require('./webpack.base.config');
 const OptimizeCSSPlugin     = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin     = require('html-webpack-plugin')
 const ClosureCompilerPlugin = require('webpack-closure-compiler');
+const VisualizerPlugin      = require('webpack-visualizer-plugin');
 
 module.exports = merge(base, {
     output: {
@@ -42,6 +43,7 @@ module.exports = merge(base, {
                 collapseWhitespace   : true,
                 removeAttributeQuotes: true
             }
-        })
+        }),
+        new VisualizerPlugin()
     ]
 });
