@@ -13,11 +13,6 @@ module.exports = merge(base, {
             'process.env': { NODE_ENV: '"development"' },
             'config': require('../config')
         }),
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
-    ],
-    devServer: {
-        publicPath: '/',
-        port: 8083
-    }
+    ]
 });
