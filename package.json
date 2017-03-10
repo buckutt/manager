@@ -17,7 +17,7 @@
     "start": "node app",
     "start:watch": "cross-env WATCH=1 node app",
     "lint": "eslint .",
-    "serve": "static public/ -a 0.0.0.0 -p 8083"
+    "start": "static public/ -a 0.0.0.0 -p 8083"
   },
   "dependencies": {
     "bcryptjs": "^2.3.0",

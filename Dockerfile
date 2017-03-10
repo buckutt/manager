@@ -1,10 +1,10 @@
-FROM mhart/alpine-node:latest
+FROM node:alpine
 
 WORKDIR /usr/src/buckless-manager
 
 EXPOSE 8083
 
-CMD ["npm", "run", "start"]
+CMD ["yarn", "run", "start"]
 
 RUN apk update && \
     apk add --no-cache git openssh make gcc g++ python && \
@@ -12,8 +12,8 @@ RUN apk update && \
 
 COPY package.json /usr/src/buckless-manager/
 
-RUN npm install
+RUN yarn install
 
 COPY . /usr/src/buckless-manager/
 
-RUN npm run build
+RUN yarn run build
