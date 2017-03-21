@@ -26,6 +26,7 @@
                             <td class="mdl-data-table__cell--non-numeric">{{ item.date | date }}</td>
                             <td class="mdl-data-table__cell--non-numeric">{{ translation(item.type) }}</td>
                             <td class="mdl-data-table__cell--non-numeric">{{ item.point }}</td>
+                            <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'transfer'">{{ item.point }}</td>
                             <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'reload'">{{ item.mop }}</td>
                             <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'purchase'">{{ item.articles[0] }}</td>
                             <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'promotion'">
