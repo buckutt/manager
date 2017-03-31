@@ -24,7 +24,7 @@ import bcrypt  from 'bcryptjs';
 import { put } from '../lib/fetch';
 
 export default {
-    data () {
+    data() {
         return {
             currentPin  : '',
             pin         : '',
@@ -36,19 +36,19 @@ export default {
         change(currentPin, pin, confirmedPin) {
             let message = null;
 
-            if (pin != confirmedPin) {
+            if (pin !== confirmedPin) {
                 message = 'Les deux codes PIN ne sont pas identiques';
             }
 
-            if (currentPin == pin) {
+            if (currentPin === pin) {
                 message = 'L\'ancien et le nouveau code PIN rentrés sont identiques';
             }
 
-            if (pin.length != 4) {
+            if (pin.length !== 4) {
                 message = 'Le nouveau code PIN ne fait pas la bonne longueur';
             }
 
-            if (currentPin.length != 4) {
+            if (currentPin.length !== 4) {
                 message = 'L\'ancien code est faux';
             }
 
@@ -65,10 +65,10 @@ export default {
 
             bcrypt.hash(pin, 10, (err, hash) => {
                 put('changepin', {
-                        currentPin,
-                        pin: hash
-                    })
-                    .then(result => {
+                    currentPin,
+                    pin: hash
+                })
+                    .then((result) => {
                         if (!result.changed) {
                             const eData = {
                                 message: 'L\'ancien code est faux',
@@ -92,10 +92,10 @@ export default {
             });
         }
     }
-}
+};
 </script>
 
-<style lang="sass">
+<style lang="scss">
     @import '../main.scss';
 
     .b-changepin {

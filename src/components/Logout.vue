@@ -20,11 +20,11 @@ export default {
         })
     },
 
-    mounted () {
+    mounted() {
         sessionStorage.clear();
         this.updateLogged(false);
 
         this.$router.push('/');
     }
-}
+};
 </script>

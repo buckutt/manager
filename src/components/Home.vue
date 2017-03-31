@@ -29,7 +29,7 @@ import { mapState, mapActions } from 'vuex';
 import { post, updateBearer }   from '../lib/fetch';
 
 export default {
-    data () {
+    data() {
         return {
             mail: '',
             pin : ''
@@ -43,7 +43,7 @@ export default {
         ]),
         login(mail, pin) {
             post('login', { meanOfLogin: 'etuMail', data: mail, pin })
-                .then(result => {
+                .then((result) => {
                     if (!result.isAPIError && result.user) {
                         sessionStorage.setItem('token', result.token);
                         this.updateLogged(true);
@@ -78,10 +78,10 @@ export default {
             this.$router.push('/history');
         }
     }
-}
+};
 </script>
 
-<style lang="sass">
+<style lang="scss">
     @import '../main.scss';
 
     .b-home__login {

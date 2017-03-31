@@ -47,11 +47,11 @@
 
 <script>
 import { get } from '../lib/fetch';
-import date    from '../lib/date';
-import price   from '../lib/price';
+import '../lib/date';
+import '../lib/price';
 
 export default {
-    data () {
+    data() {
         return {
             history  : [],
             page     : 1,
@@ -62,10 +62,10 @@ export default {
     methods: {
         translation(type) {
             const translateTable = {
-                'promotion': 'Achat',
-                'purchase' : 'Achat',
-                'reload'   : 'Rechargement',
-                'transfer' : 'Virement'
+                promotion: 'Achat',
+                purchase : 'Achat',
+                reload   : 'Rechargement',
+                transfer : 'Virement'
             };
 
             return translateTable[type];
@@ -83,15 +83,15 @@ export default {
     },
 
     mounted() {
-        get(`history`)
-            .then(result => {
+        get('history')
+            .then((result) => {
                 this.history = result;
             });
     },
 
     computed: {
         paginatedHistory() {
-            return this.history.slice(this.start, this.start + parseInt(this.nbPerPage));
+            return this.history.slice(this.start, this.start + parseInt(this.nbPerPage, 10));
         },
         nbPages() {
             return Math.ceil(this.history.length / this.nbPerPage);
@@ -112,10 +112,10 @@ export default {
             return false;
         }
     }
-}
+};
 </script>
 
-<style lang="sass">
+<style lang="scss">
     @import '../main.scss';
 
     .b-history__pages {

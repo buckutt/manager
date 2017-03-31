@@ -1,7 +1,6 @@
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open('pwa').then(cache => {
-      return cache.addAll([
+self.addEventListener('install', (e) => {
+    e.waitUntil(
+    caches.open('pwa').then(cache => cache.addAll([
         '/',
         '/build.js',
         '/font.css',
@@ -28,16 +27,13 @@ self.addEventListener('install', e => {
         '/images/icon48.png',
         '/images/icon72.png',
         '/images/icon96.png'
-      ])
-      .then(() => self.skipWaiting());
-    })
-  )
+    ])
+      .then(() => self.skipWaiting()))
+  );
 });
 
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });

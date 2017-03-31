@@ -40,7 +40,7 @@ import bcrypt       from 'bcryptjs';
 import { get, put } from '../lib/fetch';
 
 export default {
-    data () {
+    data() {
         return {
             mail        : '',
             pin         : '',
@@ -54,11 +54,11 @@ export default {
         change(key, pin, confirmedPin) {
             let message = null;
 
-            if (pin != confirmedPin) {
+            if (pin !== confirmedPin) {
                 message = 'Les deux codes PIN ne sont pas identiques';
             }
 
-            if (pin.length != 4) {
+            if (pin.length !== 4) {
                 message = 'Le nouveau code PIN ne fait pas la bonne longueur';
             }
 
@@ -74,44 +74,46 @@ export default {
             }
 
             bcrypt.hash(pin, 10, (err, hash) => {
-                put('generatepin', {
+                if (!err) {
+                    put('generatepin', {
                         key,
                         pin: hash
                     })
-                    .then(result => {
-                        if (result.status) {
-                            const eData = {
-                                message: 'Ce mail a déjà été utilisé pour changer de mot de passe.',
-                                timeout: 3000
+                        .then((result) => {
+                            if (result.status) {
+                                const eData = {
+                                    message: 'Ce mail a déjà été utilisé pour changer de mot de passe.',
+                                    timeout: 3000
+                                };
+
+                                this.$root.$emit('snackfilter', eData);
+                                return;
+                            }
+                            this.pin          = '';
+                            this.confirmedPin = '';
+
+                            const cData = {
+                                message: 'Le code PIN a bien été changé',
+                                timeout: 1000
                             };
 
-                            this.$root.$emit('snackfilter', eData);
-                            return;
-                        }
-                        this.pin          = '';
-                        this.confirmedPin = '';
+                            this.$root.$emit('snackfilter', cData);
 
-                        const cData = {
-                            message: 'Le code PIN a bien été changé',
-                            timeout: 1000
-                        };
-
-                        this.$root.$emit('snackfilter', cData);
-
-                        setTimeout(() => this.$router.push('/'), 1000);
-                    })
-                    .catch(err => {
-                        this.$root.$emit('snackfilter', {
-                            message: 'Une erreur inconnue a eu lieu',
-                            timeout: 2000
+                            setTimeout(() => this.$router.push('/'), 1000);
+                        })
+                        .catch(() => {
+                            this.$root.$emit('snackfilter', {
+                                message: 'Une erreur inconnue a eu lieu',
+                                timeout: 2000
+                            });
                         });
-                    });
+                }
             });
         },
         ask(mail) {
             this.loading = true;
             get(`askpin?mail=${mail}`)
-                .then(result => {
+                .then((result) => {
                     this.loading = false;
                     if (result.status) {
                         this.$root.$emit('snackfilter', {
@@ -126,7 +128,7 @@ export default {
                         timeout: 2000
                     });
                 })
-                .catch(err => {
+                .catch(() => {
                     this.$root.$emit('snackfilter', {
                         message: 'Une erreur inconnue a eu lieu',
                         timeout: 2000
@@ -134,10 +136,10 @@ export default {
                 });
         }
     }
-}
+};
 </script>
 
-<style lang="sass">
+<style lang="scss">
     @import '../main.scss';
 
     .b-generatepin {

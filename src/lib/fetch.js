@@ -11,7 +11,7 @@ if (sessionStorage.hasOwnProperty('token')) {
     authData.headers.Authorization = `Bearer ${sessionStorage.getItem('token')}`;
 }
 
-export function updateBearer (token) {
+export function updateBearer(token) {
     authData.headers.Authorization = `Bearer ${token}`;
 }
 
@@ -21,7 +21,7 @@ export function updateBearer (token) {
  * @param  {Object} opts_ Options to pass to fetch (headers are already there)
  * @return {Promise} The result as JSON
  */
-export function get (url, opts_) {
+export function get(url, opts_) {
     const opts = Object.assign({}, authData, {
         method: 'GET'
     }, opts_);
@@ -44,7 +44,7 @@ export function get (url, opts_) {
  * @param  {Object} opts_ Options to pass to fetch (headers, body and method are already there)
  * @return {Promise} The result as JSON
  */
-export function post (url, data, opts_) {
+export function post(url, data, opts_) {
     const opts = Object.assign({}, authData, {
         method: 'POST',
         body  : JSON.stringify(data)
@@ -61,7 +61,7 @@ export function post (url, data, opts_) {
  * @param  {Object} opts_ Options to pass to fetch (headers, body and method are already there)
  * @return {Promise} The result as JSON
  */
-export function put (url, data, opts_) {
+export function put(url, data, opts_) {
     const opts = Object.assign({}, authData, {
         method: 'PUT',
         body  : JSON.stringify(data)
@@ -77,7 +77,7 @@ export function put (url, data, opts_) {
  * @param  {Object} opts_ Options to pass to fetch (headers are already there)
  * @return {Promise} The result as JSON
  */
-export function del (url, opts_) {
+export function del(url, opts_) {
     const opts = Object.assign({}, authData, {
         method: 'DELETE'
     }, opts_);

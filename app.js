@@ -27,7 +27,7 @@ app.use('/manifest.json', (req, res) => {
         .json(require('./manifest'));
 });
 
-app.use('/', express.static('public'));
+app.use('/', express.static('dist'));
 
 app.use('/api/*', proxy(options));
 
