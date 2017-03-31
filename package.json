@@ -16,8 +16,7 @@
     "build": "cross-env NODE_ENV=production webpack",
     "start": "node app",
     "start:watch": "cross-env WATCH=1 node app",
-    "lint": "eslint .",
-    "serve": "static public/ -a 0.0.0.0 -p 8083"
+    "lint": "eslint ."
   },
   "dependencies": {
     "bcryptjs": "^2.3.0",
