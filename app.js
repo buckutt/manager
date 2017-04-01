@@ -6,7 +6,7 @@ const app     = express();
 
 const options = {
     target: {
-        host    : (process.env.NODE_ENV === 'dev') ? 'localhost' : 'nginx_service',
+        host    : (process.env.NODE_ENV === 'dev') ? 'localhost' : 'nginx',
         port    : (process.env.NODE_ENV === 'dev') ? 3000 : 443,
         protocol: 'https:',
         key     : fs.readFileSync('./ssl/manager-key.pem', 'utf8'),
