@@ -1,3 +1,1 @@
-import * as globalActions from './global';
-
-export default { ...globalActions };
+export * from './global';

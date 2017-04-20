@@ -36,7 +36,7 @@ module.exports = merge(base, {
         new OptimizeCSSPlugin(),
         new HtmlWebpackPlugin({
             filename: utils.resolve('dist/index.html'),
-            template: utils.resolve('index.html'),
+            template: utils.resolve('index.prod.html'),
             inject  : true,
             minify  : {
                 removeComments       : true,

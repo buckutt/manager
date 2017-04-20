@@ -6,6 +6,8 @@ import VueRouter from 'vue-router';
 import Vuex      from 'vuex';
 import VueMdl    from 'vue-mdl';
 
+import './assets/font.css';
+
 import App         from './App.vue';
 import ChangePin   from './components/ChangePin.vue';
 import GeneratePin from './components/GeneratePin.vue';

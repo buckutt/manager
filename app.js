@@ -1,16 +1,24 @@
 const express = require('express');
 const proxy   = require('http-proxy-middleware');
 const fs      = require('fs');
+const path    = require('path');
+
+const keyPath = path.join(__dirname, './ssl/manager-key.pem');
+const crtPath = path.join(__dirname, './ssl/manager-crt.pem')
+
+if (!fs.existsSync(keyPath) || !fs.existsSync(crtPath)) {
+    throw new Error('SSL certificate not found');
+}
 
 const app     = express();
 
 const options = {
     target: {
-        host    : (process.env.NODE_ENV === 'dev') ? 'localhost' : 'nginx',
-        port    : (process.env.NODE_ENV === 'dev') ? 3000 : 443,
+        host    : process.env.API_HOST || 'localhost',
+        port    : process.env.API_PORT || 3000,
         protocol: 'https:',
-        key     : fs.readFileSync('./ssl/manager-key.pem', 'utf8'),
-        cert    : fs.readFileSync('./ssl/manager-crt.pem', 'utf8')
+        key     : fs.readFileSync(keyPath, 'utf8'),
+        cert    : fs.readFileSync(crtPath, 'utf8')
     },
     changeOrigin: true,
     secure      : false,
