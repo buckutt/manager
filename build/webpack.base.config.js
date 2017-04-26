@@ -7,7 +7,7 @@ module.exports = {
     output: {
         path: utils.resolve('./dist'),
         filename: 'app.js',
-        publicPath: '/dist/'
+        publicPath: './'
     },
     target: 'web',
     resolve: {
