@@ -1,3 +1,6 @@
+import 'promise-polyfill';
+import 'whatwg-fetch';
+
 import 'material-design-lite/material.min';
 import 'material-design-lite/material.min.css';
 
