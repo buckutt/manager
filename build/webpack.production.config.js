@@ -5,7 +5,7 @@ const base                  = require('./webpack.base.config');
 const OptimizeCSSPlugin     = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin     = require('html-webpack-plugin')
 const ClosureCompilerPlugin = require('webpack-closure-compiler');
-const VisualizerPlugin      = require('webpack-visualizer-plugin');
+const GenerateJsonPlugin    = require('generate-json-webpack-plugin');
 
 module.exports = merge(base, {
     output: {
@@ -44,6 +44,6 @@ module.exports = merge(base, {
                 removeAttributeQuotes: true
             }
         }),
-        new VisualizerPlugin()
+        new GenerateJsonPlugin('manifest.json', require('./../manifest.json'))
     ]
 });

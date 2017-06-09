@@ -3,7 +3,7 @@ sudo: false
 
 services:
   - docker
-  
+
 node_js:
   - 7
 

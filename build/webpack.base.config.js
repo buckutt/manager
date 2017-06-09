@@ -53,6 +53,7 @@ module.exports = {
         hints: false
     },
     devServer: {
+        disableHostCheck: true,
         historyApiFallback: true,
         hot: true,
         port: 8083,
