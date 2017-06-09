@@ -160,9 +160,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-    @import '../main.scss';
-
+<style>
     .b-transfer {
         max-width: 800px;
     }

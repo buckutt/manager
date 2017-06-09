@@ -38,33 +38,31 @@ export default {
 };
 </script>
 
-<style lang="scss">
-    @import '../main.scss';
-
+<style>
     .b-sidebar {
         background: #34495e;
         color: #fff;
         width: 200px;
 
-        > .b-sidebar__credit {
+        & > .b-sidebar__credit {
             margin-left: 20px;
         }
 
-        > h1 {
+        & > h1 {
             font-size: 2.5rem;
             font-weight: 300;
             margin: 1rem 0;
             text-align: center;
         }
 
-        > nav {
-            > a {
+        & > nav {
+            & > a {
                 box-sizing: border-box;
                 color: #fff !important;
                 padding-left: 10px;
                 text-align: left;
 
-                > i {
+                & > i {
                     margin-right: 10px;
                 }
             }

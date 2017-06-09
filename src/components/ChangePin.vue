@@ -95,9 +95,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-    @import '../main.scss';
-
+<style>
     .b-changepin {
         max-width: 800px;
     }

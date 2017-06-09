@@ -81,14 +81,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
-    @import '../main.scss';
-
+<style>
     .b-home__login {
-        > div {
+        & > div {
             width: 500px;
 
-            .mdl-textfield {
+            & .mdl-textfield {
                 width: 100%;
             }
         }

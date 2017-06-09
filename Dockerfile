@@ -7,7 +7,7 @@ EXPOSE 8083
 CMD ["yarn", "run", "start"]
 
 RUN apk update && \
-    apk add --no-cache git openssh make gcc g++ python openjdk8-jre && \
+    apk add --no-cache git openssh make gcc g++ python && \
     mkdir -p /usr/src/buckless-manager
 
 COPY package.json /usr/src/buckless-manager/

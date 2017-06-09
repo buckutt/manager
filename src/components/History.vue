@@ -115,14 +115,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
-    @import '../main.scss';
-
+<style>
     .b-history__pages {
         display: flex;
         margin-bottom: 5px;
 
-        > a {
+        & > a {
             flex: 0;
             opacity: 0;
             pointer-events: none;
@@ -134,18 +132,18 @@ export default {
             }
         }
 
-        > span {
+        & > span {
             flex: 1;
         }
     }
 
-    .b-history__promotion {
+    & .b-history__promotion {
         margin-top: 2px;
         margin-bottom: 0px;
         padding-left: 25px;
         font-size: 12px;
 
-        > li {
+        & > li {
             line-height: 1.2;
         }
     }

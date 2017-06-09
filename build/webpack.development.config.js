@@ -16,3 +16,5 @@ module.exports = merge(base, {
         new webpack.NoEmitOnErrorsPlugin()
     ]
 });
+
+console.log(require('util').inspect(module.exports.module.rules[4], { colors: true, depth: null }));

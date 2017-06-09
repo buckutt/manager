@@ -1,11 +1,10 @@
-const webpack               = require('webpack');
-const merge                 = require('webpack-merge');
-const utils                 = require('./utils');
-const base                  = require('./webpack.base.config');
-const OptimizeCSSPlugin     = require('optimize-css-assets-webpack-plugin');
-const HtmlWebpackPlugin     = require('html-webpack-plugin')
-const ClosureCompilerPlugin = require('webpack-closure-compiler');
-const GenerateJsonPlugin    = require('generate-json-webpack-plugin');
+const webpack            = require('webpack');
+const merge              = require('webpack-merge');
+const utils              = require('./utils');
+const base               = require('./webpack.base.config');
+const OptimizeCSSPlugin  = require('optimize-css-assets-webpack-plugin');
+const HtmlWebpackPlugin  = require('html-webpack-plugin')
+const GenerateJsonPlugin = require('generate-json-webpack-plugin');
 
 module.exports = merge(base, {
     output: {
@@ -21,14 +20,6 @@ module.exports = merge(base, {
         new webpack.DefinePlugin({
             'process.env': { NODE_ENV: '"production"' },
             'config': require('../config')
-        }),
-        new ClosureCompilerPlugin({
-            compiler: {
-                language_in: 'ECMASCRIPT6',
-                language_out: 'ECMASCRIPT5',
-                compilation_level: 'SIMPLE',
-                warning_level: 'QUIET'
-            }
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true

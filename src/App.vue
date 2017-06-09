@@ -38,7 +38,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
     @import './main.scss';
 
     .mdl-card {
