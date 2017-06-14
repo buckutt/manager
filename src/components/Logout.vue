@@ -5,24 +5,18 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
     methods: {
         ...mapActions([
-            'updateLogged'
+            'updateLoggedUser'
         ])
-    },
-
-    computed: {
-        ...mapState({
-            logged: state => state.global.logged
-        })
     },
 
     mounted() {
         sessionStorage.clear();
-        this.updateLogged(false);
+        this.updateLoggedUser(null);
 
         this.$router.push('/');
     }

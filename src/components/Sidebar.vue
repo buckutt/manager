@@ -2,7 +2,7 @@
     <transition name="slide">
         <div class="b-sidebar mdl-layout__drawer" v-show="logged">
             <h1>Buckless</h1>
-            <span class="b-sidebar__credit">Solde: {{ loggedUser.credit | price(true) }}</span>
+            <span class="b-sidebar__credit" v-if="loggedUser">Solde: {{ loggedUser.credit | price(true) }}</span>
             <nav class="mdl-navigation">
                 <router-link to="/history" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
                     <i class="material-icons">history</i>
@@ -26,14 +26,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
     computed: {
         ...mapState({
-            logged    : state => state.global.logged,
-            loggedUser: state => state.global.loggedUser
-        })
+            loggedUser: state => state.app.loggedUser
+        }),
+        ...mapGetters([
+            'logged'
+        ])
     }
 };
 </script>

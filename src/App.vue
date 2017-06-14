@@ -1,39 +1,26 @@
 <template>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
-        <Sidebar></Sidebar>
+        <b-sidebar></b-sidebar>
         <main class="mdl-layout__content" :class="{ 'b-forcedMain': !logged }">
             <router-view></router-view>
         </main>
+        <mdl-snackbar display-on="snackfilter"></mdl-snackbar>
     </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import Sidebar                  from './components/Sidebar.vue';
+import { mapGetters } from 'vuex';
+import Sidebar        from './components/Sidebar.vue';
 
 export default {
     components: {
-        Sidebar
-    },
-
-    methods: {
-        ...mapActions([
-            'updateLogged',
-            'updateLoggedUser'
-        ])
+        'b-sidebar': Sidebar
     },
 
     computed: {
-        ...mapState({
-            logged: state => state.global.logged
-        })
-    },
-
-    mounted() {
-        if (sessionStorage.hasOwnProperty('token')) {
-            this.updateLogged(true);
-            this.updateLoggedUser(JSON.parse(sessionStorage.getItem('user')));
-        }
+        ...mapGetters([
+            'logged'
+        ])
     }
 };
 </script>

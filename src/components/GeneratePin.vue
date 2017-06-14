@@ -31,13 +31,11 @@
                 </div>
             </form>
         </div>
-        <mdl-snackbar display-on="snackfilter"></mdl-snackbar>
     </div>
 </template>
 
 <script>
-import bcrypt       from 'bcryptjs';
-import { get, put } from '../lib/fetch';
+import { mapActions } from 'vuex';
 
 export default {
     data() {
@@ -51,89 +49,29 @@ export default {
     },
 
     methods: {
+        ...mapActions([
+            'askPin',
+            'generatePin',
+            'notify'
+        ]),
         change(key, pin, confirmedPin) {
-            let message = null;
-
-            if (pin !== confirmedPin) {
-                message = 'Les deux codes PIN ne sont pas identiques';
-            }
-
-            if (pin.length !== 4) {
-                message = 'Le nouveau code PIN ne fait pas la bonne longueur';
-            }
-
-            if (message) {
-                const data = {
-                    message,
-                    timeout: 3000
-                };
-
-                this.$root.$emit('snackfilter', data);
-
-                return;
-            }
-
-            bcrypt.hash(pin, 10, (err, hash) => {
-                if (!err) {
-                    put('generatepin', {
-                        key,
-                        pin: hash
-                    })
-                        .then((result) => {
-                            if (result.status) {
-                                const eData = {
-                                    message: 'Ce mail a déjà été utilisé pour changer de mot de passe.',
-                                    timeout: 3000
-                                };
-
-                                this.$root.$emit('snackfilter', eData);
-                                return;
-                            }
-                            this.pin          = '';
-                            this.confirmedPin = '';
-
-                            const cData = {
-                                message: 'Le code PIN a bien été changé',
-                                timeout: 1000
-                            };
-
-                            this.$root.$emit('snackfilter', cData);
-
-                            setTimeout(() => this.$router.push('/'), 1000);
-                        })
-                        .catch(() => {
-                            this.$root.$emit('snackfilter', {
-                                message: 'Une erreur inconnue a eu lieu',
-                                timeout: 2000
-                            });
-                        });
-                }
-            });
+            this.generatePin({ key, pin, confirmedPin })
+                .then((message) => {
+                    this.pin          = '';
+                    this.confirmedPin = '';
+                    this.notify(message);
+                    this.$router.push('/');
+                })
+                .catch(error => this.notify(error));
         },
         ask(mail) {
             this.loading = true;
-            get(`askpin?mail=${mail}`)
-                .then((result) => {
+            this.askPin(mail)
+                .then((message) => {
                     this.loading = false;
-                    if (result.status) {
-                        this.$root.$emit('snackfilter', {
-                            message: 'Cette adresse mail est inconnue',
-                            timeout: 2000
-                        });
-                        return;
-                    }
-
-                    this.$root.$emit('snackfilter', {
-                        message: 'Un mail vient de vous être envoyé à l\'adresse indiquée',
-                        timeout: 2000
-                    });
+                    this.notify(message);
                 })
-                .catch(() => {
-                    this.$root.$emit('snackfilter', {
-                        message: 'Une erreur inconnue a eu lieu',
-                        timeout: 2000
-                    });
-                });
+                .catch(error => this.notify(error));
         }
     }
 };

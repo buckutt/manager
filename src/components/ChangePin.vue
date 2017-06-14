@@ -15,13 +15,11 @@
                 </div>
             </form>
         </div>
-        <mdl-snackbar display-on="snackfilter"></mdl-snackbar>
     </div>
 </template>
 
 <script>
-import bcrypt  from 'bcryptjs';
-import { put } from '../lib/fetch';
+import { mapActions } from 'vuex';
 
 export default {
     data() {
@@ -33,63 +31,19 @@ export default {
     },
 
     methods: {
+        ...mapActions([
+            'changePin',
+            'notify'
+        ]),
         change(currentPin, pin, confirmedPin) {
-            let message = null;
-
-            if (pin !== confirmedPin) {
-                message = 'Les deux codes PIN ne sont pas identiques';
-            }
-
-            if (currentPin === pin) {
-                message = 'L\'ancien et le nouveau code PIN rentrés sont identiques';
-            }
-
-            if (pin.length !== 4) {
-                message = 'Le nouveau code PIN ne fait pas la bonne longueur';
-            }
-
-            if (currentPin.length !== 4) {
-                message = 'L\'ancien code est faux';
-            }
-
-            if (message) {
-                const data = {
-                    message,
-                    timeout: 3000
-                };
-
-                this.$root.$emit('snackfilter', data);
-
-                return;
-            }
-
-            bcrypt.hash(pin, 10, (err, hash) => {
-                put('changepin', {
-                    currentPin,
-                    pin: hash
+            this.changePin({ currentPin, pin, confirmedPin })
+                .then((message) => {
+                    this.currentPin   = '';
+                    this.pin          = '';
+                    this.confirmedPin = '';
+                    this.notify(message);
                 })
-                    .then((result) => {
-                        if (!result.changed) {
-                            const eData = {
-                                message: 'L\'ancien code est faux',
-                                timeout: 3000
-                            };
-
-                            this.$root.$emit('snackfilter', eData);
-                            return;
-                        }
-                        this.currentPin   = '';
-                        this.pin          = '';
-                        this.confirmedPin = '';
-
-                        const cData = {
-                            message: 'Le code PIN a bien été changé',
-                            timeout: 3000
-                        };
-
-                        this.$root.$emit('snackfilter', cData);
-                    });
-            });
+                .catch(error => this.notify(error));
         }
     }
 };

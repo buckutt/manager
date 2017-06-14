@@ -2,14 +2,18 @@ import Vue  from 'vue';
 import Vuex from 'vuex';
 
 import * as actions from './actions';
+import * as getters from './getters';
 
-import global from './modules/global';
+import app           from './modules/app';
+import notifications from './modules/notifications';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     actions,
+    getters,
     modules: {
-        global
+        app,
+        notifications
     }
 });

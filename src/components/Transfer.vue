@@ -4,157 +4,49 @@
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text">Réaliser un virement</h2>
             </div>
-            <form @submit.prevent="dispatch(name, currentPin, amount, selectedUser)">
+            <form @submit.prevent="transferWrapper(currentPin, amount, user)">
                 <div class="mdl-card__supporting-text b--fullwidth">
-                    <mdl-textfield floating-label="Destinataire" v-model="name" class="b--inputwidth" v-if="usersFound.length < 1"></mdl-textfield>
-                    <mdl-textfield floating-label="Destinataire" v-model="name" class="b--inputwidth" v-if="usersFound.length == 1" readonly></mdl-textfield>
-                    <mdl-select label="Destinataire" id="user-select" class="b--inputwidth" v-model="selectedUser" :options="userOptions" v-if="usersFound.length > 1"></mdl-select>
-                    <br />
+                    <b-autocomplete label="Destinataire" id="b-name" @input="defineUser" class="b--inputwidth" required="required" error="Un utilisateur doit être sélectionné"></b-autocomplete><br />
                     <mdl-textfield type="password" floating-label="Code PIN actuel" v-model="currentPin" class="b--inputwidth"></mdl-textfield><br />
                     <mdl-textfield floating-label="Montant" v-model="amount" class="b--inputwidth"></mdl-textfield>
                 </div>
-                <div class="mdl-card__actions mdl-card--border" transition="fade">
-                    <mdl-button type="button" colored raised class="mdl-js-ripple-effect b--inputwidth" @click.native="cancel" v-show="usersFound.length > 0">Annuler</mdl-button>
-                    <mdl-button colored raised class="mdl-js-ripple-effect b--inputwidth" v-if="usersFound.length < 1">Rechercher</mdl-button>
-                    <mdl-button colored raised class="mdl-js-ripple-effect b--inputwidth" v-else>Valider</mdl-button>
+                <div class="mdl-card__actions mdl-card--border">
+                    <mdl-button colored raised class="mdl-js-ripple-effect b--inputwidth">Valider</mdl-button>
                 </div>
             </form>
         </div>
-        <mdl-snackbar display-on="snackfilter"></mdl-snackbar>
     </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import { get, post }            from '../lib/fetch';
+import { mapActions } from 'vuex';
+import Autocomplete   from './Autocomplete';
 
 export default {
+    components: {
+        'b-autocomplete': Autocomplete
+    },
+
     data() {
         return {
-            name        : '',
-            currentPin  : '',
-            amount      : '',
-            selectedUser: '',
-            usersFound  : []
+            currentPin: '',
+            amount    : '',
+            user      : undefined
         };
     },
 
     methods: {
         ...mapActions([
-            'updateLoggedUser'
+            'transfer',
+            'notify'
         ]),
-        cancel() {
-            this.usersFound   = [];
-            this.selectedUser = '';
-            this.name         = '';
-            this.amount       = '';
-            this.currentPin   = '';
+        defineUser(user) {
+            this.user = user;
         },
-        dispatch(name, currentPin, amount, user) {
-            if (this.usersFound.length > 0) {
-                this.transfer(currentPin, amount, user);
-            } else {
-                this.search(name);
-            }
-        },
-        transfer(currentPin, amount, user) {
-            let message = '';
-
-            if (currentPin.length !== 4) {
-                message = 'L\'ancien code est faux';
-            }
-
-            if (!user) {
-                message = 'Merci de sélectionner un utilisateur';
-            }
-
-            if (message) {
-                const data = {
-                    message,
-                    timeout: 3000
-                };
-
-                this.$root.$emit('snackfilter', data);
-
-                return;
-            }
-
-            post('transfer', {
-                currentPin,
-                amount     : amount * 100,
-                Reciever_id: user
-            })
-            .then((result) => {
-                if (!result.newCredit) {
-                    this.$root.$emit('snackfilter', {
-                        message: result.message,
-                        timeout: 3000
-                    });
-                    return;
-                }
-
-                const newUser  = this.loggedUser;
-                newUser.credit = result.newCredit;
-
-                this.updateLoggedUser(newUser);
-
-                this.cancel();
-
-                this.$root.$emit('snackfilter', {
-                    message: 'Le virement a bien été effectué',
-                    timeout: 3000
-                });
-            });
-        },
-        search(name) {
-            if (name.length < 2) {
-                this.$root.$emit('snackfilter', {
-                    message: 'Merci de rentrer au moins 2 caractères',
-                    timeout: 2000
-                });
-
-                return;
-            }
-
-            const strName = encodeURIComponent(name);
-
-            get(`searchuser?name=${strName}`).then((users) => {
-                this.selectedUser = '';
-
-                if (users.length < 1) {
-                    this.$root.$emit('snackfilter', {
-                        message: 'Aucun utilisateur n\'a été trouvé',
-                        timeout: 2000
-                    });
-                } else if (users.length === 1) {
-                    this.$root.$emit('snackfilter', {
-                        message: 'Un utilisateur a été trouvé, veuillez confirmer',
-                        timeout: 2000
-                    });
-
-                    const user        = users[0];
-                    this.name         = `${user.firstname} ${user.lastname}`;
-                    this.selectedUser = user.id;
-                } else {
-                    this.$root.$emit('snackfilter', {
-                        message: 'Plusieurs utilisateurs ont été trouvé, veuillez sélectionner le bon',
-                        timeout: 2000
-                    });
-                }
-
-                this.usersFound = users;
-            });
-        }
-    },
-
-    computed: {
-        ...mapState({
-            loggedUser: state => state.global.loggedUser
-        }),
-        userOptions() {
-            const users = this.usersFound.map(user => ({ name: `${user.firstname} ${user.lastname}`, value: user.id }));
-
-            return users;
+        transferWrapper(currentPin, amount, user) {
+            this.transfer({ currentPin, amount, user })
+                .then(message => this.notify(message))
+                .catch(error => this.notify(error));
         }
     }
 };

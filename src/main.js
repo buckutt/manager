@@ -11,13 +11,13 @@ import VueMdl    from 'vue-mdl';
 
 import './assets/font.css';
 
-import App         from './App.vue';
-import ChangePin   from './components/ChangePin.vue';
-import GeneratePin from './components/GeneratePin.vue';
-import History     from './components/History.vue';
-import Home        from './components/Home.vue';
-import Logout      from './components/Logout.vue';
-import Transfer    from './components/Transfer.vue';
+import App            from './App.vue';
+import ChangePin      from './components/ChangePin.vue';
+import GeneratePin    from './components/GeneratePin.vue';
+import History        from './components/History.vue';
+import Home           from './components/Home.vue';
+import Logout         from './components/Logout.vue';
+import Transfer       from './components/Transfer.vue';
 
 import store from './store/index';
 
@@ -59,12 +59,16 @@ const routes = [
 const router = new VueRouter({ routes });
 
 router.beforeEach((route, from, next) => {
-    if ((route.path !== '/' && route.path !== '/generate') && !router.app.$store.state.global.logged) {
+    if ((route.path !== '/' && route.path !== '/generate') && !router.app.$store.getters.logged) {
         next('/');
+    } else if (route.path === '/' && router.app.$store.getters.logged) {
+        next('/history');
     } else {
         next();
     }
 });
+
+store.dispatch('createNeededData');
 
 const Manager = Vue.extend({
     router,
@@ -73,4 +77,16 @@ const Manager = Vue.extend({
     template  : '<App></App>'
 });
 
-new Manager().$mount('#app');
+const vueApp = new Manager().$mount('#app');
+
+store.subscribe((mutation) => {
+    switch (mutation.type) {
+        case 'UPDATENOTIFY':
+            vueApp.$root.$emit('snackfilter', {
+                message: mutation.payload.message
+            });
+            break;
+        default:
+            break;
+    }
+});

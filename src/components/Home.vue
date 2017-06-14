@@ -5,7 +5,7 @@
                 <div class="mdl-card__title">
                     <h2 class="mdl-card__title-text">Connexion</h2>
                 </div>
-                <form @submit.prevent="login(mail, pin)">
+                <form @submit.prevent="log(mail, pin)">
                     <div class="mdl-card__supporting-text">
                         <mdl-textfield floating-label="Mail" v-model="mail"></mdl-textfield><br />
                         <mdl-textfield type="password" floating-label="Code PIN" v-model="pin"></mdl-textfield>
@@ -20,13 +20,11 @@
                 </form>
             </div>
         </div>
-        <mdl-snackbar display-on="snackfilter"></mdl-snackbar>
     </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import { post, updateBearer }   from '../lib/fetch';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     data() {
@@ -38,45 +36,20 @@ export default {
 
     methods: {
         ...mapActions([
-            'updateLogged',
-            'updateLoggedUser'
+            'login',
+            'notify'
         ]),
-        login(mail, pin) {
-            post('login', { meanOfLogin: 'etuMail', data: mail, pin })
-                .then((result) => {
-                    if (!result.isAPIError && result.user) {
-                        sessionStorage.setItem('token', result.token);
-                        this.updateLogged(true);
-                        this.updateLoggedUser(result.user);
-                        updateBearer(result.token);
-
-                        this.$router.push('/history');
-                    } else {
-                        const data = {
-                            message: 'La connexion a échoué.',
-                            timeout: 2000
-                        };
-
-                        this.$root.$emit('snackfilter', data);
-                    }
-                });
+        log(mail, pin) {
+            this.login({ meanOfLogin: 'etuMail', data: mail, pin })
+                .then(() => this.$router.push('/history'))
+                .catch(() => this.notify({ message: 'La connexion a échoué.' }));
         }
     },
 
     computed: {
-        ...mapState({
-            logged: state => state.global.logged
-        })
-    },
-
-    mounted() {
-        if (sessionStorage.hasOwnProperty('token')) {
-            this.updateLogged(true);
-        }
-
-        if (this.logged) {
-            this.$router.push('/history');
-        }
+        ...mapGetters([
+            'logged'
+        ])
     }
 };
 </script>
