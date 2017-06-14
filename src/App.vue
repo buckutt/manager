@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style>
-    @import './main.scss';
+    @import './main.css';
 
     .mdl-card {
         width: 90%;
