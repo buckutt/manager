@@ -18,15 +18,19 @@ export function updateLoggedUserField({ state, dispatch }, payload) {
 export function createNeededData({ commit, dispatch }) {
     if (sessionStorage.hasOwnProperty('token')) {
         commit('UPDATELOGGEDUSER', JSON.parse(sessionStorage.getItem('user')));
+        dispatch('load');
     }
-
-    dispatch('loadHistory');
 }
 
 export function loadHistory({ commit, getters }) {
     if (getters.logged) {
         get('history').then(results => commit('ADDHISTORY', results));
     }
+}
+
+export function load({ dispatch }) {
+    dispatch('initSocket', sessionStorage.getItem('token'));
+    dispatch('loadHistory');
 }
 
 export function login({ commit, dispatch }, credentials) {
@@ -38,7 +42,7 @@ export function login({ commit, dispatch }, credentials) {
                     dispatch('updateLoggedUser', result.user);
                     updateBearer(result.token);
 
-                    dispatch('loadHistory');
+                    dispatch('load');
                     resolve(result.user);
                 } else {
                     reject();

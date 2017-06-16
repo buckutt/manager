@@ -38,7 +38,7 @@
                         <tfoot v-if="pagesNumber > 1">
                             <tr>
                                 <td colspan="6">
-                                    <div class="b--center b--fullwidth b-history__pages">
+                                    <div class="b--fullwidth b-history__pages">
                                         <span>
                                             Affichage de {{ paginatedHistory.length }} éléments sur {{ history.length }}
                                         </span>
@@ -124,28 +124,7 @@ export default {
 </script>
 
 <style>
-    .b-history__pages {
-        display: flex;
-        margin-bottom: 5px;
-
-        & > a {
-            flex: 0;
-            opacity: 0;
-            pointer-events: none;
-            text-decoration: none;
-
-            &.visible {
-                opacity: 1;
-                pointer-events: all;
-            }
-        }
-
-        & > span {
-            flex: 1;
-        }
-    }
-
-    & .b-history__promotion {
+    .b-history__promotion {
         margin-top: 2px;
         margin-bottom: 0px;
         padding-left: 25px;
@@ -166,11 +145,11 @@ export default {
                 pointer-events: none;
                 text-decoration: none;
                 margin: 10px;
+            }
 
-                & .b-history__visible {
-                    opacity: 1;
-                    pointer-events: all;
-                }
+            & .b-history__visible {
+                opacity: 1;
+                pointer-events: all;
             }
         }
     }

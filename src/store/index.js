@@ -5,6 +5,7 @@ import * as actions from './actions';
 import * as getters from './getters';
 
 import app           from './modules/app';
+import changes       from './modules/changes';
 import notifications from './modules/notifications';
 
 Vue.use(Vuex);
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     getters,
     modules: {
         app,
+        changes,
         notifications
     }
 });
