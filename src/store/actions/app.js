@@ -33,7 +33,7 @@ export function load({ dispatch }) {
     dispatch('loadHistory');
 }
 
-export function login({ commit, dispatch }, credentials) {
+export function login({ dispatch }, credentials) {
     return new Promise((resolve, reject) => {
         post('login', credentials)
             .then((result) => {

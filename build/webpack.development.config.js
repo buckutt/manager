@@ -7,7 +7,7 @@ module.exports = merge(base, {
     module: {
         rules: utils.styleLoaders()
     },
-    devtool: '#cheap-module-eval-source-map',
+    devtool: 'source-map',
     plugins: [
         new webpack.DefinePlugin({
             'process.env': { NODE_ENV: '"development"' },

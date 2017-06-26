@@ -62,7 +62,7 @@ export function askPin({ dispatch }, mail) {
 
             resolve({ message: 'Un mail vient de vous être envoyé à l\'adresse indiquée' });
         })
-        .catch(() => reject({ message: 'Une erreur inconnue a eu lieu' }));
+            .catch(() => reject({ message: 'Une erreur inconnue a eu lieu' }));
     });
 }
 
@@ -96,7 +96,7 @@ export function generatePin({ dispatch }, pins) {
 
                     resolve({ message: 'Le code PIN a bien été changé' });
                 })
-                .catch(() => reject({ message: 'Une erreur inconnue a eu lieu' }));
+                    .catch(() => reject({ message: 'Une erreur inconnue a eu lieu' }));
             }
         });
     });
