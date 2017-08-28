@@ -12,6 +12,9 @@ const mutations = {
     ADDHISTORY(state_, data) {
         state_.history.push(...data);
     },
+    CLEARHISTORY(state_) {
+        state_.history = [];
+    },
     CHANGEUSERS(state_, users) {
         state_.users = users;
     }
