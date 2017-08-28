@@ -28,6 +28,10 @@ export function loadHistory({ commit, getters }) {
     }
 }
 
+export function clearHistory({ commit }) {
+    commit('CLEARHISTORY');
+}
+
 export function load({ dispatch }) {
     dispatch('initSocket', sessionStorage.getItem('token'));
     dispatch('loadHistory');

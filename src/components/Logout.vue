@@ -11,6 +11,7 @@ export default {
     methods: {
         ...mapActions([
             'updateLoggedUser',
+            'clearHistory',
             'closeSocket'
         ])
     },
@@ -18,6 +19,7 @@ export default {
     mounted() {
         sessionStorage.clear();
         this.updateLoggedUser(null);
+        this.clearHistory();
         this.closeSocket();
 
         this.$router.push('/');
