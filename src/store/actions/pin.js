@@ -54,11 +54,9 @@ export function changePin({ dispatch }, pins) {
 export function askPin({ dispatch }, mail) {
     return new Promise((resolve, reject) => {
         get(`askpin?mail=${mail}`).then((result) => {
-            if (result.status) {
+            if (!result.success) {
                 return reject({ message: 'Cette adresse mail est inconnue' });
             }
-
-            dispatch('updateLoggedUserField', { field: 'recoverKey', value: true });
 
             resolve({ message: 'Un mail vient de vous être envoyé à l\'adresse indiquée' });
         })
@@ -88,11 +86,9 @@ export function generatePin({ dispatch }, pins) {
                     key: pins.key,
                     pin: hash
                 }).then((result) => {
-                    if (result.status) {
+                    if (!result.success) {
                         return reject({ message: 'Ce mail a déjà été utilisé pour changer de mot de passe.' });
                     }
-
-                    dispatch('updateLoggedUserField', { field: 'pin', value: true });
 
                     resolve({ message: 'Le code PIN a bien été changé' });
                 })
