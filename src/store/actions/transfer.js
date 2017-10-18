@@ -30,7 +30,7 @@ export function transfer({ state, dispatch }, data) {
         post('transfer', {
             currentPin : data.currentPin,
             amount     : +data.amount * 100,
-            Reciever_id: data.user.id
+            reciever_id: data.user.id
         })
             .then((result) => {
                 if (!result.newCredit) {
