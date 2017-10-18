@@ -51,20 +51,19 @@ export function changePin({ dispatch }, pins) {
  * GeneratePin actions
  */
 
-export function askPin({ dispatch }, mail) {
-    return new Promise((resolve, reject) => {
-        get(`askpin?mail=${mail}`).then((result) => {
+export function askPin(_, mail) {
+    return get(`askpin?mail=${mail}`)
+        .then((result) => {
             if (!result.success) {
-                return reject({ message: 'Cette adresse mail est inconnue' });
+                return Promise.reject({ message: 'Cette adresse mail est inconnue' });
             }
 
-            resolve({ message: 'Un mail vient de vous être envoyé à l\'adresse indiquée' });
+            return { message: 'Un mail vient de vous être envoyé à l\'adresse indiquée' };
         })
-            .catch(() => reject({ message: 'Une erreur inconnue a eu lieu' }));
-    });
+        .catch(() => Promise.reject({ message: 'Une erreur inconnue a eu lieu' }));
 }
 
-export function generatePin({ dispatch }, pins) {
+export function generatePin(_, pins) {
     return new Promise((resolve, reject) => {
         let message = null;
 
@@ -85,13 +84,14 @@ export function generatePin({ dispatch }, pins) {
                 put('generatepin', {
                     key: pins.key,
                     pin: hash
-                }).then((result) => {
-                    if (!result.success) {
-                        return reject({ message: 'Ce mail a déjà été utilisé pour changer de mot de passe.' });
-                    }
-
-                    resolve({ message: 'Le code PIN a bien été changé' });
                 })
+                    .then((result) => {
+                        if (!result.success) {
+                            return reject({ message: 'Ce mail a déjà été utilisé pour changer de mot de passe.' });
+                        }
+
+                        resolve({ message: 'Le code PIN a bien été changé' });
+                    })
                     .catch(() => reject({ message: 'Une erreur inconnue a eu lieu' }));
             }
         });
