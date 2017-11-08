@@ -1,7 +1,7 @@
 <template>
     <transition name="slide">
         <div class="b-sidebar mdl-layout__drawer" v-show="logged">
-            <h1>Buckless</h1>
+            <h1>{{ barName }}</h1>
             <span class="b-sidebar__credit" v-if="loggedUser">Solde: {{ loggedUser.credit | price(true) }}</span>
             <nav class="mdl-navigation">
                 <router-link to="/history" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
@@ -35,7 +35,10 @@ export default {
         }),
         ...mapGetters([
             'logged'
-        ])
+        ]),
+        barName() {
+            return config.name;
+        }
     }
 };
 </script>
@@ -51,9 +54,13 @@ export default {
         }
 
         & > h1 {
+            color: #fff;
+            background-color: #223648;
             font-size: 2.5rem;
             font-weight: 300;
-            margin: 1rem 0;
+            padding: 1rem 0;
+            margin-top: 0px;
+            margin-bottom: 10px;
             text-align: center;
         }
 
