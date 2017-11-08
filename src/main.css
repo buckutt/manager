@@ -31,7 +31,6 @@ html, body {
     font-feature-settings: 'liga';
 }
 
-// Utils
 .b--capitalized {
     text-transform: capitalize;
 }
@@ -67,7 +66,6 @@ html, body {
     float: left;
 }
 
-// Transitions
 .fade-enter-active, .fade-leave-active {
     transition: opacity .4s ease;
 }
