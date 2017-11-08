@@ -29,7 +29,7 @@ export function transfer({ state, dispatch }, data) {
 
         post('transfer', {
             currentPin : data.currentPin,
-            amount     : +data.amount * 100,
+            amount     : +(+data.amount * 100).toFixed(1),
             reciever_id: data.user.id
         })
             .then((result) => {
