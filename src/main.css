@@ -8,6 +8,7 @@ html, body {
     height: 100%;
     margin: 0;
     width: 100%;
+    background-color: #F3F3F3;
 }
 
 #app {
@@ -31,7 +32,6 @@ html, body {
     font-feature-settings: 'liga';
 }
 
-// Utils
 .b--capitalized {
     text-transform: capitalize;
 }
@@ -67,7 +67,6 @@ html, body {
     float: left;
 }
 
-// Transitions
 .fade-enter-active, .fade-leave-active {
     transition: opacity .4s ease;
 }

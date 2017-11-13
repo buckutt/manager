@@ -11,7 +11,7 @@
                             <tr>
                                 <th class="mdl-data-table__cell--non-numeric">Date</th>
                                 <th class="mdl-data-table__cell--non-numeric">Type</th>
-                                <th class="mdl-data-table__cell--non-numeric">Location</th>
+                                <th class="mdl-data-table__cell--non-numeric">Localisation</th>
                                 <th class="mdl-data-table__cell--non-numeric">Objet</th>
                                 <th class="mdl-data-table__cell--non-numeric">Avec</th>
                                 <th>Valeur</th>
@@ -23,7 +23,7 @@
                                 <td class="mdl-data-table__cell--non-numeric">{{ translation(item.type) }}</td>
                                 <td class="mdl-data-table__cell--non-numeric">{{ item.point }}</td>
                                 <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'transfer'">{{ item.point }}</td>
-                                <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'reload'">{{ item.mop }}</td>
+                                <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'reload' || item.type === 'refund'">{{ item.mop }}</td>
                                 <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'purchase'">{{ item.articles[0] }}</td>
                                 <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'promotion'">
                                     {{ item.promotion }}
@@ -74,6 +74,7 @@ export default {
     methods: {
         translation(type) {
             const translateTable = {
+                refund   : 'Remboursement',
                 promotion: 'Achat',
                 purchase : 'Achat',
                 reload   : 'Rechargement',
