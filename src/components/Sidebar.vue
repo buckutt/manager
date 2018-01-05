@@ -78,6 +78,10 @@ export default {
         }
     }
 
+    .b-sidebar[style="display: none;"] + .mdl-layout__drawer-button {
+        display: none;
+    }
+
     .slide-enter-active, .slide-leave-active {
         transition: all .5s ease;
     }

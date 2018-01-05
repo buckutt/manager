@@ -68,6 +68,15 @@ router.beforeEach((route, from, next) => {
     }
 });
 
+router.afterEach((_, path) => {
+    const $sidebar = document.querySelector('.b-sidebar');
+
+    if ($sidebar) {
+        $sidebar.classList.remove('is-visible');
+        document.querySelector('.mdl-layout__obfuscator').classList.remove('is-visible');
+    }
+});
+
 store.dispatch('createNeededData');
 
 const Manager = Vue.extend({

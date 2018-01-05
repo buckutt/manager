@@ -32,17 +32,17 @@ export function transfer({ state, dispatch }, data) {
             amount     : +(+data.amount * 100).toFixed(1),
             reciever_id: data.user.id
         })
-            .then((result) => {
-                if (!result.newCredit) {
-                    return reject({ message: result.message });
-                }
+        .then((result) => {
+            if (!result.newCredit) {
+                return reject({ message: result.message });
+            }
 
-                const newUser  = state.app.loggedUser;
-                newUser.credit = result.newCredit;
+            const newUser  = state.app.loggedUser;
+            newUser.credit = result.newCredit;
 
-                dispatch('updateLoggedUser', newUser);
+            dispatch('updateLoggedUser', newUser);
 
-                resolve({ message: 'Le virement a bien été effectué' });
-            });
+            resolve({ message: 'Le virement a bien été effectué' });
+        });
     });
 }
