@@ -68,7 +68,7 @@ router.beforeEach((route, from, next) => {
     }
 });
 
-router.afterEach((_, path) => {
+router.afterEach(() => {
     const $sidebar = document.querySelector('.b-sidebar');
 
     if ($sidebar) {
