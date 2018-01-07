@@ -8,6 +8,10 @@
                     <i class="material-icons">history</i>
                     Historique
                 </router-link>
+                <router-link to="/reload" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">attach_money</i>
+                    Rechargement
+                </router-link>
                 <router-link to="/pin" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
                     <i class="material-icons">lock_ouline</i>
                     PIN
@@ -33,9 +37,11 @@ export default {
         ...mapState({
             loggedUser: state => state.app.loggedUser
         }),
+
         ...mapGetters([
             'logged'
         ]),
+
         barName() {
             return config.name;
         }
@@ -48,6 +54,10 @@ export default {
         background: #34495e;
         color: #fff;
         width: 200px;
+
+        &.mdl-layout__drawer {
+            border-right: 1px solid rgba(224, 224, 224, 0.5);
+        }
 
         & > .b-sidebar__credit {
             margin-left: 20px;

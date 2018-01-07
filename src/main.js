@@ -15,6 +15,7 @@ import App            from './App.vue';
 import ChangePin      from './components/ChangePin.vue';
 import GeneratePin    from './components/GeneratePin.vue';
 import History        from './components/History.vue';
+import Reload         from './components/Reload.vue';
 import Home           from './components/Home.vue';
 import Logout         from './components/Logout.vue';
 import Transfer       from './components/Transfer.vue';
@@ -37,6 +38,10 @@ const routes = [
     {
         path     : '/history',
         component: History
+    },
+    {
+        path     : '/reload',
+        component: Reload
     },
     {
         path     : '/pin',
