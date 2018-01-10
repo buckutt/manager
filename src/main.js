@@ -19,6 +19,7 @@ import Reload         from './components/Reload.vue';
 import Home           from './components/Home.vue';
 import Logout         from './components/Logout.vue';
 import Transfer       from './components/Transfer.vue';
+import PaginatedTable from './components/PaginatedTable.vue';
 
 import store from './store/index';
 
@@ -29,6 +30,8 @@ if (navigator.serviceWorker) {
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueMdl);
+
+Vue.component('b-table', PaginatedTable);
 
 const routes = [
     {

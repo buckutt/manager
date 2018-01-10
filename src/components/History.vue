@@ -1,58 +1,22 @@
 <template>
-    <div class="b-history">
+    <div class="b-history b--fullwidth">
         <div class="mdl-card mdl-shadow--2dp">
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text">Historique</h2>
             </div>
             <div class="mdl-card__supporting-text b--fullwidth">
-                <div class="b-responsive-table">
-                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--1dp b--fullwidth">
-                        <thead>
-                            <tr>
-                                <th class="mdl-data-table__cell--non-numeric">Date</th>
-                                <th class="mdl-data-table__cell--non-numeric">Type</th>
-                                <th class="mdl-data-table__cell--non-numeric">Localisation</th>
-                                <th class="mdl-data-table__cell--non-numeric">Objet</th>
-                                <th class="mdl-data-table__cell--non-numeric">Avec</th>
-                                <th>Valeur</th>
-                            </tr>
-                        </thead>
-                        <tbody id="historyTable">
-                            <tr v-for="item in paginatedHistory">
-                                <td class="mdl-data-table__cell--non-numeric">{{ item.date | date }}</td>
-                                <td class="mdl-data-table__cell--non-numeric">{{ translation(item.type) }}</td>
-                                <td class="mdl-data-table__cell--non-numeric">{{ item.point }}</td>
-                                <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'transfer'">{{ item.point }}</td>
-                                <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'reload' || item.type === 'refund'">{{ item.mop }}</td>
-                                <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'purchase'">{{ item.articles[0] }}</td>
-                                <td class="mdl-data-table__cell--non-numeric" v-if="item.type == 'promotion'">
-                                    {{ item.promotion }}
-                                    <ul v-if="item.articles.length > 1" class="b-history__promotion">
-                                        <li v-for="article in item.articles">{{ article }}</li>
-                                    </ul>
-                                </td>
-                                <td class="mdl-data-table__cell--non-numeric b--capitalized">Opérateur {{ item.seller.firstname }} {{ item.seller.lastname }}</td>
-                                <td>{{ item.amount | price(true) }}</td>
-                            </tr>
-                        </tbody>
-                        <tfoot v-if="pagesNumber > 1">
-                            <tr>
-                                <td colspan="6">
-                                    <div class="b--fullwidth b-history__pages">
-                                        <span>
-                                            Affichage de {{ paginatedHistory.length }} éléments sur {{ history.length }}
-                                        </span>
-                                        <span>
-                                            <a href="#" @click.prevent="previous()" :class="{ 'b-history__visible': isPrevious }">Précedent</a>
-                                            Page {{ page }}/{{ pagesNumber }}
-                                            <a href="#" @click.prevent="next()" :class="{ 'b-history__visible': isNext }">Suivant</a>
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                <b-table
+                    :headers="[
+                        { title: 'Date', field: 'date', type: 'date' },
+                        { title: 'Type', field: 'type' },
+                        { title: 'Localisation', field: 'point' },
+                        { title: 'Objet', field: 'object', list: 'articles' },
+                        { title: 'Avec', field: 'operator', class: 'b--capitalized' },
+                        { title: 'Valeur', field: 'amount', type: 'price' }
+                    ]"
+                    :data="displayedHistory"
+                    :paging="10">
+                </b-table>
             </div>
         </div>
     </div>
@@ -60,17 +24,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import '../lib/date';
-import '../lib/price';
 
 export default {
-    data() {
-        return {
-            page  : 1,
-            paging: 5
-        };
-    },
-
     methods: {
         translation(type) {
             const translateTable = {
@@ -82,16 +37,6 @@ export default {
             };
 
             return translateTable[type];
-        },
-        previous() {
-            if (this.isPrevious) {
-                this.page -= 1;
-            }
-        },
-        next() {
-            if (this.isNext) {
-                this.page += 1;
-            }
         }
     },
 
@@ -99,59 +44,50 @@ export default {
         ...mapState({
             history: state => state.app.history
         }),
-        paginatedHistory() {
-            return this.history.slice(this.start, this.start + parseInt(this.paging, 10));
-        },
-        pagesNumber() {
-            return Math.ceil(this.history.length / this.paging);
-        },
-        start() {
-            return (this.page - 1) * this.paging;
-        },
-        isPrevious() {
-            if (this.page - 1 > 0) {
-                return true;
+        displayedHistory() {
+            if (!this.history) {
+                return [];
             }
-            return false;
-        },
-        isNext() {
-            if (this.page + 1 <= this.pagesNumber) {
-                return true;
-            }
-            return false;
+
+            return this.history.map((transaction) => {
+                const displayedTransaction = {
+                    id      : transaction.id,
+                    rawType : transaction.type,
+                    date    : transaction.date,
+                    amount  : transaction.amount,
+                    point   : transaction.point,
+                    type    : this.translation(transaction.type),
+                    operator: `Opérateur ${transaction.seller.firstname} ${transaction.seller.lastname}`
+                };
+
+                if (transaction.isCanceled) {
+                    displayedTransaction.warning = 'Cette transaction a été annulée.';
+                }
+
+                switch (transaction.type) {
+                    case 'transfer':
+                        displayedTransaction.object = transaction.point;
+                        break;
+                    case 'reload':
+                        displayedTransaction.object = transaction.mop;
+                        break;
+                    case 'refund':
+                        displayedTransaction.object = transaction.mop;
+                        break;
+                    case 'purchase':
+                        displayedTransaction.object = transaction.articles[0];
+                        break;
+                    case 'promotion':
+                        displayedTransaction.object   = transaction.promotion;
+                        displayedTransaction.articles = transaction.articles;
+                        break;
+                    default:
+                        displayedTransaction.object = 'Autre';
+                }
+
+                return displayedTransaction;
+            });
         }
     }
 };
 </script>
-
-<style>
-    .b-history__promotion {
-        margin-top: 2px;
-        margin-bottom: 0px;
-        padding-left: 25px;
-        font-size: 12px;
-
-        & > li {
-            line-height: 1.2;
-        }
-    }
-
-    .b-history__pages {
-        display: flex;
-        justify-content: space-between;
-
-        > span {
-            > a {
-                opacity: 0;
-                pointer-events: none;
-                text-decoration: none;
-                margin: 10px;
-            }
-
-            & .b-history__visible {
-                opacity: 1;
-                pointer-events: all;
-            }
-        }
-    }
-</style>
