@@ -1,6 +1,6 @@
 <template>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
-        <b-sidebar></b-sidebar>
+    <div class="mdl-layout mdl-js-layout">
+        <b-header />
         <main class="mdl-layout__content" :class="{ 'b-forcedMain': !logged }">
             <router-view></router-view>
         </main>
@@ -10,11 +10,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Sidebar        from './components/Sidebar.vue';
+import Header         from './components/Header.vue';
 
 export default {
     components: {
-        'b-sidebar': Sidebar
+        'b-header': Header
     },
 
     computed: {
@@ -37,5 +37,15 @@ export default {
     .b-forcedMain {
         width: 100%;
         margin-left: 0px !important;
+    }
+
+    .b-responsive-table {
+        overflow-x: auto;
+    }
+
+    @media (max-height: 700px) {
+        .mdl-card {
+            margin: 15px auto;
+        }
     }
 </style>

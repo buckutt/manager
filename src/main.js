@@ -96,6 +96,8 @@ const Manager = Vue.extend({
 
 const vueApp = new Manager().$mount('#app');
 
+window.app = vueApp;
+
 store.subscribe((mutation) => {
     switch (mutation.type) {
         case 'UPDATENOTIFY':

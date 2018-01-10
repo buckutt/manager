@@ -30,7 +30,7 @@ app.use((req, res, next) => {
                 break;
         }
 
-        console.log(`redirecting ${req.url} to https://0.0.0.0:3000/${url}`)
+        console.log(`redirecting ${req.url} to https://0.0.0.0:3000/${url}`);
 
         proxy.web(req, res, {
             ignorePath: true,
@@ -44,8 +44,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-    console.log('coucou')
-    res.sendFile(path.join(__dirname, '../index.html'))
+    res.sendFile(path.join(__dirname, '../index.html'));
 });
 
 const compiler = webpack(require('../build/webpack.development.config.js'));
