@@ -7,7 +7,7 @@ export function searchUsers({ commit }, name) {
     });
 }
 
-export function transfer({ state, dispatch }, data) {
+export function transfer({ dispatch }, data) {
     return new Promise((resolve, reject) => {
         let message = '';
 
@@ -37,10 +37,8 @@ export function transfer({ state, dispatch }, data) {
                 return reject({ message: result.message });
             }
 
-            const newUser  = state.app.loggedUser;
-            newUser.credit = result.newCredit;
-
-            dispatch('updateLoggedUser', newUser);
+            // Reload full history
+            dispatch('loadHistory');
 
             resolve({ message: 'Le virement a bien été effectué' });
         });

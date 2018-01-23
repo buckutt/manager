@@ -12,7 +12,7 @@ export function initSocket({ commit, dispatch, state }, token) {
     }));
 
     state.changes.socket.on('connected', () => {
-        console.log('Connecté');
+        console.log('Connected');
         dispatch('registerUserCredit');
     });
 
@@ -24,12 +24,14 @@ export function initSocket({ commit, dispatch, state }, token) {
 export function registerUserCredit({ state, dispatch }) {
     state.changes.socket.emit('userCredit');
 
-    state.changes.socket.on('userCredit', credit =>
+    state.changes.socket.on('userCredit', (credit) => {
         dispatch('updateLoggedUserField', {
             field: 'credit',
             value: credit
-        })
-    );
+        });
+
+        dispatch('loadHistory');
+    });
 }
 
 export function closeSocket({ commit, state }) {
