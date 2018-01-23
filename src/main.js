@@ -16,6 +16,7 @@ import ChangePin      from './components/ChangePin.vue';
 import GeneratePin    from './components/GeneratePin.vue';
 import History        from './components/History.vue';
 import Reload         from './components/Reload.vue';
+import ReloadStatus   from './components/ReloadStatus.vue';
 import Home           from './components/Home.vue';
 import Logout         from './components/Logout.vue';
 import Transfer       from './components/Transfer.vue';
@@ -45,6 +46,20 @@ const routes = [
     {
         path     : '/reload',
         component: Reload
+    },
+    {
+        path     : '/reload/success',
+        component: ReloadStatus,
+        props    : {
+            status: 'success'
+        }
+    },
+    {
+        path     : '/reload/failed',
+        component: ReloadStatus,
+        props    : {
+            status: 'failed'
+        }
     },
     {
         path     : '/pin',
