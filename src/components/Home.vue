@@ -57,6 +57,7 @@ export default {
 <style>
     .b-home__login {
         & > div {
+            max-width: calc(100% - 20px);
             width: 500px;
 
             & .mdl-textfield {
