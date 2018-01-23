@@ -15,9 +15,12 @@ import App            from './App.vue';
 import ChangePin      from './components/ChangePin.vue';
 import GeneratePin    from './components/GeneratePin.vue';
 import History        from './components/History.vue';
+import Reload         from './components/Reload.vue';
+import ReloadStatus   from './components/ReloadStatus.vue';
 import Home           from './components/Home.vue';
 import Logout         from './components/Logout.vue';
 import Transfer       from './components/Transfer.vue';
+import PaginatedTable from './components/PaginatedTable.vue';
 
 import store from './store/index';
 
@@ -29,6 +32,8 @@ Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueMdl);
 
+Vue.component('b-table', PaginatedTable);
+
 const routes = [
     {
         path     : '/',
@@ -37,6 +42,24 @@ const routes = [
     {
         path     : '/history',
         component: History
+    },
+    {
+        path     : '/reload',
+        component: Reload
+    },
+    {
+        path     : '/reload/success',
+        component: ReloadStatus,
+        props    : {
+            status: 'success'
+        }
+    },
+    {
+        path     : '/reload/failed',
+        component: ReloadStatus,
+        props    : {
+            status: 'failed'
+        }
     },
     {
         path     : '/pin',
@@ -68,6 +91,15 @@ router.beforeEach((route, from, next) => {
     }
 });
 
+router.afterEach(() => {
+    const $sidebar = document.querySelector('.b-sidebar');
+
+    if ($sidebar) {
+        $sidebar.classList.remove('is-visible');
+        document.querySelector('.mdl-layout__obfuscator').classList.remove('is-visible');
+    }
+});
+
 store.dispatch('createNeededData');
 
 const Manager = Vue.extend({
@@ -78,6 +110,8 @@ const Manager = Vue.extend({
 });
 
 const vueApp = new Manager().$mount('#app');
+
+window.app = vueApp;
 
 store.subscribe((mutation) => {
     switch (mutation.type) {

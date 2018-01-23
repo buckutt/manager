@@ -41,7 +41,7 @@ export default {
         ]),
         log(mail, pin) {
             this.login({ meanOfLogin: 'etuMail', data: mail, pin })
-                .then(() => this.$router.push('/history'))
+                .then(() => this.$router.push('/reload'))
                 .catch(() => this.notify({ message: 'La connexion a échoué.' }));
         }
     },
