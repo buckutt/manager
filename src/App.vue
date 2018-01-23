@@ -28,6 +28,11 @@ export default {
 <style>
     @import './main.css';
 
+    .mdl-layout__content {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
     .mdl-card {
         width: 90%;
         max-width: 1400px;
