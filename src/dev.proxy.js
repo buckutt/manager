@@ -25,6 +25,9 @@ app.use((req, res, next) => {
             case 'login':
                 url = 'services/login';
                 break;
+            case 'provider/callback':
+                url = 'provider/callback';
+                break;
             default:
                 url = `services/manager/${url}`;
                 break;
