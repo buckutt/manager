@@ -22,9 +22,15 @@ export function createNeededData({ commit, dispatch }) {
     }
 }
 
-export function loadHistory({ commit, getters }) {
+export function loadHistory({ state, commit, dispatch, getters }) {
     if (getters.logged) {
-        get('history').then(results => commit('ADDHISTORY', results));
+        get('history')
+            .then((results) => {
+                const newUser  = state.app.loggedUser;
+                newUser.credit = results.credit;
+                dispatch('updateLoggedUser', newUser);
+                commit('REPLACEHISTORY', results.history.filter(entry => !entry.isRemoved));
+            });
     }
 }
 

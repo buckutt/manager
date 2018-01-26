@@ -12,7 +12,8 @@ const proxy = httpProxy
             pfx: fs.readFileSync(path.join(__dirname, '../../server/ssl/certificates/manager/manager.p12')),
             passphrase: 'manager'
         }),
-        secure: false
+        secure: false,
+        ws: true
     });
 
 const app = express();
@@ -43,6 +44,14 @@ app.use((req, res, next) => {
         return;
     }
 
+    if (req.url.indexOf('/socket.io/') === 0) {
+        proxy.web(req, res, {
+            target: `https://0.0.0.0:3000/${req.url}`
+        });
+
+        return;
+    }
+
     next();
 });
 
@@ -56,4 +65,12 @@ app.use(devMiddleware(compiler, {
     stats: { colors: true }
 }));
 
-app.listen(8083);
+let server = app.listen(8083);
+
+server.on('upgrade', (req, socket, head) => {
+    console.log('upgrading socket request to https://0.0.0.0:3000/');
+
+    proxy.ws(req, socket, head, {
+        target: 'https://0.0.0.0:3000/'
+    });
+});

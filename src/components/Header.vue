@@ -128,6 +128,7 @@ export default {
 
                 &.b--active {
                     color: #e74c3c;
+                    font-weight: bold;
                 }
 
                 > i {
