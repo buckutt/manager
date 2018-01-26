@@ -1,7 +1,7 @@
 <template>
     <div class="b-home">
         <div class="b-home__login">
-            <div class="mdl-card mdl-shadow--2dp">
+            <div class="mdl-card mdl-card--maximized mdl-shadow--2dp">
                 <div class="mdl-card__title">
                     <h2 class="mdl-card__title-text">Connexion</h2>
                 </div>
@@ -12,7 +12,7 @@
                     </div>
                     <div class="mdl-card__actions mdl-card--border">
                         <mdl-button colored class="b--left">Connexion</mdl-button>
-                        <router-link to="/generate" class="mdl-button mdl-button--colored mdl-js-button b--right">
+                        <router-link to="/forgot-pin" class="mdl-button mdl-button--colored mdl-js-button b--right">
                             PIN oublié
                         </router-link>
                         <div class="b--clear"></div>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
     data() {
@@ -39,6 +39,7 @@ export default {
             'login',
             'notify'
         ]),
+
         log(mail, pin) {
             this.login({ meanOfLogin: 'etuMail', data: mail, pin })
                 .then(() => this.$router.push('/reload'))
@@ -46,11 +47,9 @@ export default {
         }
     },
 
-    computed: {
-        ...mapGetters([
-            'logged'
-        ])
-    }
+    computed: mapState({
+        logged: state => !!state.app.loggedUser
+    })
 };
 </script>
 

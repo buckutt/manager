@@ -2,6 +2,7 @@ import { get, post } from '../../lib/fetch';
 
 export function searchUsers({ commit }, name) {
     const strName = encodeURIComponent(name);
+
     get(`searchuser?name=${strName}`).then((users) => {
         commit('CHANGEUSERS', users);
     });
@@ -19,28 +20,30 @@ export function transfer({ dispatch }, data) {
             message = 'Merci de sélectionner un utilisateur';
         }
 
-        if (!data.amount || isNaN(data.amount)) {
+        if (!data.amount || Number.isNaN(data.amount)) {
             message = 'Le montant doit être un nombre';
         }
 
         if (message) {
-            return reject({ message });
+            return reject(new Error(message));
         }
 
-        post('transfer', {
+        const transferData = {
             currentPin : data.currentPin,
             amount     : +(+data.amount * 100).toFixed(1),
             reciever_id: data.user.id
-        })
-        .then((result) => {
-            if (!result.newCredit) {
-                return reject({ message: result.message });
-            }
+        };
 
-            // Reload full history
-            dispatch('loadHistory');
+        post('transfer', transferData)
+            .then((result) => {
+                if (!result.newCredit) {
+                    return reject(new Error(result.message));
+                }
 
-            resolve({ message: 'Le virement a bien été effectué' });
-        });
+                // Reload full history
+                dispatch('loadHistory');
+
+                resolve({ message: 'Le virement a bien été effectué' });
+            });
     });
 }

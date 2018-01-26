@@ -44,6 +44,7 @@ export default {
         ...mapState({
             history: state => state.app.history
         }),
+
         displayedHistory() {
             if (!this.history) {
                 return [];
