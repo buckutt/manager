@@ -1,6 +1,6 @@
 <template>
     <div class="b-reload b--centered">
-        <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card mdl-card--maximized mdl-shadow--2dp">
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text">Recharger en ligne</h2>
             </div>
@@ -19,7 +19,7 @@
 import { post } from '../lib/fetch';
 
 export default {
-    data () {
+    data() {
         return {
             amount: 5
         };
@@ -27,16 +27,15 @@ export default {
 
     methods: {
         reload(amount) {
-            post('reload', {
-                amount: parseInt(amount * 100, 10)
-            }).then((data) => {
-                if (data.type === 'url') {
-                    location.href = data.res;
-                }
-            });
+            post('reload', { amount: parseInt(amount * 100, 10) })
+                .then((data) => {
+                    if (data.type === 'url') {
+                        window.location.href = data.res;
+                    }
+                });
         }
     }
-}
+};
 </script>
 
 <style>

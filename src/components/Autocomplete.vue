@@ -36,14 +36,20 @@ export default {
         ...mapState({
             users: state => state.app.users
         }),
+
         displayedSuggestions() {
             return this.users.map(user => ({
                 name: `${user.firstname} ${user.lastname}`,
                 id  : user.id
             }));
         },
+
         isOpen() {
-            return (this.displayedSuggestions.length > 0 && this.open === true && this.content.length > 0);
+            return (
+                this.displayedSuggestions.length > 0 &&
+                this.open === true
+                && this.content.length > 0
+            );
         }
     },
 
@@ -51,11 +57,13 @@ export default {
         ...mapActions([
             'searchUsers'
         ]),
+
         select(suggestion) {
             this.content = suggestion.name;
             this.open    = false;
             this.$emit('input', suggestion);
         },
+
         changeInput(content) {
             this.searchUsers(content);
             this.open = true;
@@ -73,10 +81,12 @@ export default {
 <style>
     .b-autocomplete {
         display: inline-block;
+        margin: 0;
+        max-width: 300px;
     }
 
     .b-completelist {
-        width: 100%;
+        width: 300px;
         background: white;
         position: absolute;
         z-index: 10;

@@ -2,7 +2,6 @@
  * ChangePin actions
  */
 
-import bcrypt       from 'bcryptjs';
 import { get, put } from '../../lib/fetch';
 
 
@@ -27,22 +26,20 @@ export function changePin({ dispatch }, pins) {
         }
 
         if (message) {
-            return reject({ message });
+            return reject(new Error(message));
         }
 
-        bcrypt.hash(pins.pin, 10, (err, hash) => {
-            put('changepin', {
-                currentPin: pins.currentPin,
-                pin       : hash
-            }).then((result) => {
-                if (!result.changed) {
-                    return reject({ message: 'L\'ancien code est faux' });
-                }
+        put('changepin', {
+            currentPin: pins.currentPin,
+            pin       : pins.pin
+        }).then((result) => {
+            if (!result.changed) {
+                return reject(new Error('L\'ancien code est faux'));
+            }
 
-                dispatch('updateLoggedUserField', { field: 'pin', value: true });
+            dispatch('updateLoggedUserField', { field: 'pin', value: true });
 
-                resolve({ message: 'Le code PIN a bien été changé' });
-            });
+            resolve({ message: 'Le code PIN a bien été changé' });
         });
     });
 }
@@ -55,12 +52,12 @@ export function askPin(_, mail) {
     return get(`askpin?mail=${mail}`)
         .then((result) => {
             if (!result.success) {
-                return Promise.reject({ message: 'Cette adresse mail est inconnue' });
+                return Promise.reject(new Error('Cette adresse mail est inconnue'));
             }
 
             return { message: 'Un mail vient de vous être envoyé à l\'adresse indiquée' };
         })
-        .catch(() => Promise.reject({ message: 'Une erreur inconnue a eu lieu' }));
+        .catch(() => Promise.reject(new Error('Une erreur inconnue a eu lieu')));
 }
 
 export function generatePin(_, pins) {
@@ -76,24 +73,20 @@ export function generatePin(_, pins) {
         }
 
         if (message) {
-            return reject({ message });
+            return reject(new Error({ message }));
         }
 
-        bcrypt.hash(pins.pin, 10, (err, hash) => {
-            if (!err) {
-                put('generatepin', {
-                    key: pins.key,
-                    pin: hash
-                })
-                    .then((result) => {
-                        if (!result.success) {
-                            return reject({ message: 'Ce mail a déjà été utilisé pour changer de mot de passe.' });
-                        }
+        put('generatepin', {
+            key: pins.key,
+            pin: pins.pin
+        })
+            .then((result) => {
+                if (!result.success) {
+                    return reject(new Error('Ce mail a déjà été utilisé pour changer de mot de passe.'));
+                }
 
-                        resolve({ message: 'Le code PIN a bien été changé' });
-                    })
-                    .catch(() => reject({ message: 'Une erreur inconnue a eu lieu' }));
-            }
-        });
+                resolve({ message: 'Le code PIN a bien été changé' });
+            })
+            .catch(() => reject(new Error('Une erreur inconnue a eu lieu')));
     });
 }

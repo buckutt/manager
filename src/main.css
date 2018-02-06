@@ -3,7 +3,7 @@
 }
 
 html, body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
     font-size: 16px;
     height: 100%;
     margin: 0;
@@ -37,7 +37,7 @@ html, body {
 }
 
 .b--fullwidth {
-    width: 100%;
+    width: 100% !important;
 }
 
 .b--inputwidth {

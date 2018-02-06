@@ -4,7 +4,6 @@ const state = {
     users     : []
 };
 
-// mutations
 const mutations = {
     UPDATELOGGEDUSER(state_, loggedUser) {
         state_.loggedUser = loggedUser;

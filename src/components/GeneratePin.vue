@@ -1,6 +1,6 @@
 <template>
     <div class="b-generatepin b--centered">
-        <div class="mdl-card mdl-shadow--2dp" v-if="!key">
+        <div class="mdl-card mdl-card--maximized mdl-shadow--2dp" v-if="!key">
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text">Code PIN oublié</h2>
             </div>
@@ -9,11 +9,12 @@
                     <mdl-textfield floating-label="Adresse mail" v-model="mail" class="b--inputwidth"></mdl-textfield>
                 </div>
                 <div class="mdl-card__actions mdl-card--border">
-                    <mdl-button colored raised class="mdl-js-ripple-effect b--inputwidth" v-show="!loading">Envoyer</mdl-button>
-                    <div class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect b--inputwidth" v-show="loading">Traitement en cours...</div>
-                    <router-link to="/" class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect b--inputwidth">
+                    <router-link to="/" class="mdl-button mdl-button--colored mdl-js-button b--left">
                         Retour
                     </router-link>
+                    <mdl-button colored raised class="b--right" v-show="!loading">Envoyer</mdl-button>
+                    <div class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect b--right" v-show="loading">Traitement en cours...</div>
+                    <div class="b--clear"></div>
                 </div>
             </form>
         </div>
@@ -54,6 +55,7 @@ export default {
             'generatePin',
             'notify'
         ]),
+
         change(key, pin, confirmedPin) {
             this.generatePin({ key, pin, confirmedPin })
                 .then((message) => {
@@ -64,6 +66,7 @@ export default {
                 })
                 .catch(error => this.notify(error));
         },
+
         ask(mail) {
             this.loading = true;
             this.askPin(mail)
