@@ -34,39 +34,44 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
     computed: {
         ...mapState({
-            loggedUser: state => state.app.loggedUser
+            loggedUser: state => state.app.loggedUser,
+            logged    : state => !!state.app.loggedUser
         }),
 
-        ...mapGetters([
-            'logged'
-        ]),
-
         barName() {
-            return config.name;
+            return process.env.name;
         },
 
         historyClass() {
-            return this.$route.path === '/history' ? { 'b--active': true } : null
+            return this.$route.path === '/history'
+                ? { 'b--active': true }
+                : null;
         },
 
         reloadClass() {
-            return this.$route.path === '/reload' ? { 'b--active': true } : null
+            return this.$route.path === '/reload'
+                ? { 'b--active': true }
+                : null;
         },
 
         pinClass() {
-            return this.$route.path === '/pin' ? { 'b--active': true } : null
+            return this.$route.path === '/pin'
+                ? { 'b--active': true }
+                : null;
         },
 
         transferClass() {
-            return this.$route.path === '/transfer' ? { 'b--active': true } : null
+            return this.$route.path === '/transfer'
+                ? { 'b--active': true }
+                : null;
         }
     }
-}
+};
 </script>
 
 <style>

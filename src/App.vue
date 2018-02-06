@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Header         from './components/Header.vue';
+import { mapState } from 'vuex';
+import Header       from './components/Header.vue';
 
 export default {
     components: {
@@ -18,9 +18,9 @@ export default {
     },
 
     computed: {
-        ...mapGetters([
-            'logged'
-        ])
+        ...mapState({
+            logged: state => !!state.app.loggedUser
+        })
     }
 };
 </script>
@@ -28,15 +28,17 @@ export default {
 <style>
     @import './main.css';
 
-    .mdl-layout__content {
-        overflow-y: auto;
-        overflow-x: hidden;
+    main.mdl-layout__content {
+        overflow: visible;
     }
 
-    .mdl-card {
+    div.mdl-card {
         width: 90%;
-        max-width: 1400px;
         margin: 50px auto;
+
+        &.mdl-card--maximized {
+            max-width: 500px;
+        }
     }
 
     .b-forcedMain {
@@ -49,7 +51,7 @@ export default {
     }
 
     @media (max-height: 700px) {
-        .mdl-card {
+        div.mdl-card {
             margin: 15px auto;
         }
     }

@@ -1,6 +1,6 @@
 <template>
     <div class="b-transfer b--centered">
-        <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card mdl-card--maximized mdl-shadow--2dp">
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text">Réaliser un virement</h2>
             </div>
@@ -40,9 +40,11 @@ export default {
             'transfer',
             'notify'
         ]),
+
         defineUser(user) {
             this.user = user;
         },
+
         transferWrapper(currentPin, amount, user) {
             this.transfer({ currentPin, amount, user })
                 .then(message => this.notify(message))

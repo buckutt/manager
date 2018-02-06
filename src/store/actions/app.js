@@ -22,8 +22,8 @@ export function createNeededData({ commit, dispatch }) {
     }
 }
 
-export function loadHistory({ state, commit, dispatch, getters }) {
-    if (getters.logged) {
+export function loadHistory({ state, commit, dispatch }) {
+    if (state.app.loggedUser) {
         get('history')
             .then((results) => {
                 const newUser  = state.app.loggedUser;

@@ -20,7 +20,7 @@
     "settings": {
         "import/resolver": {
             "webpack": {
-                "config": "build/webpack.base.config.js"
+                "config": "build/webpack.base.conf.js"
             }
         }
     },
@@ -75,6 +75,8 @@
 
         // Dangle underscores allowance
         "no-underscore-dangle": 0,
+
+        "prefer-destructuring": 0,
 
         // Allow dynamic require
         "import/no-dynamic-require": 0,

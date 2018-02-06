@@ -1,6 +1,6 @@
 <template>
     <div class="b-reload-status b--centered">
-        <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card mdl-card--maximized mdl-shadow--2dp">
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text">Rechargement</h2>
             </div>
@@ -21,11 +21,11 @@
 export default {
     props: {
         status: {
-            type: String,
+            type    : String,
             required: true
         }
     }
-}
+};
 </script>
 
 <style>
