@@ -1,4 +1,5 @@
 {
     "NODE_ENV": "\"development\"",
-    "name": "\"Buckless\""
+    "name": "\"Buckless\"",
+    "color": "\"#34495e\""
 }
