@@ -1,26 +1,35 @@
 <template>
-    <div class="b-transfer b--centered">
-        <div class="mdl-card mdl-card--maximized mdl-shadow--2dp">
-            <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">Réaliser un virement</h2>
-            </div>
+    <div class="b-transfer">
+        <div class="mdc-card">
+            <section class="mdc-card__primary">
+                <h1 class="mdc-card__title mdc-card__title--large">Réaliser un virement</h1>
+            </section>
             <form @submit.prevent="transferWrapper(currentPin, amount, user)">
-                <div class="mdl-card__supporting-text b--fullwidth">
-                    <b-autocomplete label="Destinataire" id="b-name" @input="defineUser" class="b--inputwidth" required="required" error="Un utilisateur doit être sélectionné"></b-autocomplete><br />
-                    <mdl-textfield type="password" floating-label="Code PIN actuel" v-model="currentPin" class="b--inputwidth"></mdl-textfield><br />
-                    <mdl-textfield floating-label="Montant" v-model="amount" class="b--inputwidth"></mdl-textfield>
-                </div>
-                <div class="mdl-card__actions mdl-card--border">
-                    <mdl-button colored raised class="mdl-js-ripple-effect b--inputwidth">Valider</mdl-button>
-                </div>
+                <section class="mdc-card__supporting-text">
+                    <b-autocomplete label="Destinataire" id="b-name" @input="defineUser" class="b--inputwidth" required="required" error="Un utilisateur doit être sélectionné"/>
+                    <label class="mdc-text-field" ref="currentPin">
+                        <input type="password" class="mdc-text-field__input" required minlength="4" v-model="currentPin">
+                        <span class="mdc-text-field__label">Code PIN actuel</span>
+                        <div class="mdc-text-field__bottom-line"></div>
+                    </label>
+                    <label class="mdc-text-field" ref="amount">
+                        <input type="number" class="mdc-text-field__input" required v-model="amount">
+                        <span class="mdc-text-field__label">Montant</span>
+                        <div class="mdc-text-field__bottom-line"></div>
+                    </label>
+                </section>
+                <section class="mdc-card__actions">
+                    <button class="mdc-button mdc-button--raised">Valider</button>
+                </section>
             </form>
         </div>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import Autocomplete   from './Autocomplete';
+import { MDCTextField } from '@material/textfield/dist/mdc.textfield.min.js';
+import { mapActions }   from 'vuex';
+import Autocomplete     from './Autocomplete';
 
 export default {
     components: {
@@ -50,12 +59,11 @@ export default {
                 .then(message => this.notify(message))
                 .catch(error => this.notify(error));
         }
+    },
+
+    mounted() {
+        MDCTextField.attachTo(this.$refs.currentPin);
+        MDCTextField.attachTo(this.$refs.amount);
     }
 };
 </script>
-
-<style>
-    .b-transfer {
-        max-width: 800px;
-    }
-</style>

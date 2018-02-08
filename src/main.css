@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    letter-spacing: 0 !important;
 }
 
 html, body {
@@ -8,11 +9,21 @@ html, body {
     height: 100%;
     margin: 0;
     width: 100%;
-    background-color: #F3F3F3;
+    background-color: #f3f3f3;
 }
 
 #app {
     height: 100%;
+}
+
+main > div:first-child {
+    padding: 50px;
+}
+
+@media (max-width: 768px) {
+    main > div:first-child {
+        padding: 20px;
+    }
 }
 
 .material-icons {
@@ -32,39 +43,44 @@ html, body {
     font-feature-settings: 'liga';
 }
 
+.mdc-card {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #fff;
+
+    &.mdc-card-maximizable {
+        max-width: none;
+    }
+
+    .mdc-card__actions {
+        margin-top: 8px;
+        /* using flow reverse so that last button in code is the button pressed with ↵ */
+        flex-direction: row-reverse;
+    }
+}
+
+.mdc-button.mdc-button--raised {
+    color: #fff;
+}
+
+.mdc-button:not(.mdc-button--raised) {
+    color: #3c6382;
+}
+
+label.mdc-text-field {
+    width: 100%;
+}
+
+section.mdc-card__supporting-text {
+    letter-spacing: 0;
+}
+
 .b--capitalized {
     text-transform: capitalize;
 }
 
-.b--fullwidth {
-    width: 100% !important;
-}
-
-.b--inputwidth {
-    width: calc(100% - 20px);
-    margin-left: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.b--center {
-    text-align: center;
-}
-
-.b--centered {
-    margin: auto;
-}
-
-.b--clear {
-    clear: both;
-}
-
-.b--right {
-    float: right;
-}
-
-.b--left {
-    float: left;
+.b-space {
+    flex: 1;
 }
 
 .fade-enter-active, .fade-leave-active {

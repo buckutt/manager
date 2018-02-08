@@ -37,6 +37,8 @@
         // Disable last comma
         "comma-dangle": ["error", "never"],
 
+        "no-debugger": 0,
+
         // Align object keys
         "key-spacing": ["error", {
             "align": "colon"

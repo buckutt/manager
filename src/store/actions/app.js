@@ -15,10 +15,10 @@ export function updateLoggedUserField({ state, dispatch }, payload) {
     dispatch('updateLoggedUser', newUser);
 }
 
-export function createNeededData({ commit, dispatch }) {
+export function autoLoginUser({ commit, dispatch }) {
     if (sessionStorage.hasOwnProperty('token')) {
         commit('UPDATELOGGEDUSER', JSON.parse(sessionStorage.getItem('user')));
-        dispatch('load');
+        dispatch('loadUser');
     }
 }
 
@@ -38,25 +38,23 @@ export function clearHistory({ commit }) {
     commit('CLEARHISTORY');
 }
 
-export function load({ dispatch }) {
+export function loadUser({ dispatch }) {
     dispatch('initSocket', sessionStorage.getItem('token'));
     dispatch('loadHistory');
 }
 
 export function login({ dispatch }, credentials) {
-    return new Promise((resolve, reject) => {
-        post('login', credentials)
-            .then((result) => {
-                if (!result.isAPIError && result.user) {
-                    sessionStorage.setItem('token', result.token);
-                    dispatch('updateLoggedUser', result.user);
-                    updateBearer(result.token);
+    return post('login', credentials)
+        .then((result) => {
+            if (result.user) {
+                sessionStorage.setItem('token', result.token);
+                dispatch('updateLoggedUser', result.user);
+                updateBearer(result.token);
 
-                    dispatch('load');
-                    resolve(result.user);
-                } else {
-                    reject();
-                }
-            });
-    });
+                dispatch('loadUser');
+                return result.user;
+            }
+
+            return Promise.reject();
+        });
 }

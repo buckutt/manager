@@ -1,8 +1,15 @@
 <template>
-    <div class="b-autocomplete b--inputwidth">
-        <mdl-textfield :floating-label="label" v-model="content" @input="changeInput(content)" class="b--fullwidth"></mdl-textfield>
-        <ul :for="id" class="b-completelist mdl-shadow--2dp" ref="menu" v-if="isOpen">
-            <li v-for="suggestion in displayedSuggestions" @click="select(suggestion)" class="b-completelist__item">
+    <div class="b-autocomplete">
+        <label class="mdc-text-field" ref="content">
+            <input type="text" class="mdc-text-field__input" required v-model="content" @input="changeInput(content)">
+            <span class="mdc-text-field__label">{{ label }}</span>
+            <div class="mdc-text-field__bottom-line"></div>
+        </label>
+        <ul class="mdc-list b-autocomplete__list" v-if="isOpen">
+            <li
+                class="mdc-list-item"
+                :tabindex="index" v-for="(suggestion, index) in displayedSuggestions"
+                @click="select(suggestion)">
                 {{ suggestion.name }}
             </li>
         </ul>
@@ -10,6 +17,7 @@
 </template>
 
 <script>
+import { MDCTextField }         from '@material/textfield/dist/mdc.textfield.min.js';
 import { mapActions, mapState } from 'vuex';
 import debounce                 from 'lodash.debounce';
 
@@ -74,38 +82,32 @@ export default {
     mounted() {
         const searchUsers = this.searchUsers;
         this.searchUsers  = debounce(name => searchUsers(name), 200);
+
+        MDCTextField.attachTo(this.$refs.content);
     }
 };
 </script>
 
-<style>
-    .b-autocomplete {
-        display: inline-block;
-        margin: 0;
-        max-width: 300px;
-    }
+<style lang="scss">
+@import "@material/elevation/mixins";
 
-    .b-completelist {
-        width: 300px;
-        background: white;
-        position: absolute;
-        z-index: 10;
-        margin-top: -20px;
-        margin-bottom: 0px;
-        list-style: none;
-        padding: 0;
-        color: black;
-    }
+.b-autocomplete {
+    width: 100%;
+    position: relative;
+}
 
-    .b-completelist__item {
-        height: 40px;
-        line-height: 40px;
-        padding-left: 10px;
-        cursor: pointer;
-    }
+.b-autocomplete__list.mdc-list {
+    @include mdc-elevation(2);
 
-    .b-completelist__item:hover {
-        background: #EEEEEE;
-        transition: all 0.1s ease-in-out;
-    }
+    position: absolute;
+    width: 100%;
+    margin-top: -8px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.12);
+    z-index: 5;
+}
+
+.b-autocomplete .mdc-list-item {
+    cursor: pointer;
+}
 </style>

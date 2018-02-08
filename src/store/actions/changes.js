@@ -1,4 +1,4 @@
-import io from 'socket.io-client';
+import io from 'socket.io-client/dist/socket.io.slim';
 
 export function initSocket({ commit, dispatch, state }, token) {
     commit('CHANGESOCKET', io('', {
@@ -35,7 +35,9 @@ export function registerUserCredit({ state, dispatch }) {
 }
 
 export function closeSocket({ commit, state }) {
-    state.changes.socket.close();
+    if (state.changes.socket) {
+        state.changes.socket.close();
+    }
 
     commit('REMOVESOCKET');
 }

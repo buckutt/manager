@@ -1,18 +1,18 @@
 <template>
-    <div class="b-reload-status b--centered">
-        <div class="mdl-card mdl-card--maximized mdl-shadow--2dp">
-            <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">Rechargement</h2>
-            </div>
-            <div class="mdl-card__supporting-text b--fullwidth" v-if="status === 'success'">
-                Le paiement a bien été pris en compte. Il sera effectif d'ici quelques instants.
-            </div>
-            <div class="mdl-card__supporting-text b--fullwidth" v-else>
-                Le paiement n'a pas été pris en compte. Contactez votre banque si vous ne pensez pas que cela correspond à un fonctionnement normal.
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <router-link to="/" colored raised class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect b--inputwidth">Retour à l'accueil</router-link>
-            </div>
+    <div class="b-reload-status">
+        <div class="mdc-card">
+            <section class="mdc-card__primary">
+                <h1 class="mdc-card__title mdc-card__title--large">Rechargement</h1>
+            </section>
+            <section class="mdc-card__supporting-text" v-if="status === 'success'">
+                Le paiement <strong>a bien été pris en compte</strong>. Il sera effectif d'ici quelques instants.
+            </section>
+            <section class="mdc-card__supporting-text" v-else>
+                Le paiement <strong>n'a pas été pris en compte</strong>. Contactez votre banque si vous ne pensez pas que cela correspond à un fonctionnement normal.
+            </section>
+            <section class="mdc-card__actions">
+                <router-link tag="button" to="/" class="mdc-button mdc-button--raised">Retour à l'accueil</router-link>
+            </section>
         </div>
     </div>
 </template>
@@ -28,22 +28,9 @@ export default {
 };
 </script>
 
-<style>
-    .b-reload-status {
-        max-width: 800px;
-        text-align: center;
-
-        & > .mdl-card {
-            min-height: auto;
-        }
-
-        & .mdl-card__title > h2 {
-            margin: 0 auto;
-        }
-
-        & .mdl-button {
-            max-width: 300px;
-            margin: 10px auto;
-        }
-    }
+<style lang="scss">
+.b-reload-status section.mdc-card__supporting-text {
+    padding-top: 16px;
+    font-size: 16px;
+}
 </style>
