@@ -73,7 +73,7 @@ export function generatePin(_, pins) {
         }
 
         if (message) {
-            return reject(new Error({ message }));
+            return reject(new Error(message));
         }
 
         put('generatepin', {
@@ -82,11 +82,11 @@ export function generatePin(_, pins) {
         })
             .then((result) => {
                 if (!result.success) {
-                    return reject(new Error('Ce mail a déjà été utilisé pour changer de mot de passe.'));
+                    return reject(new Error('Impossible de changer le code PIN.'));
                 }
 
                 resolve({ message: 'Le code PIN a bien été changé' });
             })
-            .catch(() => reject(new Error('Une erreur inconnue a eu lieu')));
+            .catch(() => reject(new Error('Impossible de changer le code PIN')));
     });
 }

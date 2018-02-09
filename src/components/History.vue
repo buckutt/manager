@@ -1,23 +1,23 @@
 <template>
-    <div class="b-history b--fullwidth">
-        <div class="mdl-card mdl-shadow--2dp">
-            <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">Historique</h2>
-            </div>
-            <div class="mdl-card__supporting-text b--fullwidth">
+    <div class="b-history">
+        <div class="mdc-card mdc-card-maximizable">
+            <section class="mdc-card__primary">
+                <h1 class="mdc-card__title mdc-card__title--large">Historique</h1>
+            </section>
+            <section class="mdc-card__supporting-text">
                 <b-table
                     :headers="[
                         { title: 'Date', field: 'date', type: 'date' },
                         { title: 'Type', field: 'type' },
                         { title: 'Localisation', field: 'point' },
                         { title: 'Objet', field: 'object', list: 'articles' },
-                        { title: 'Avec', field: 'operator', class: 'b--capitalized' },
-                        { title: 'Valeur', field: 'amount', type: 'price' }
+                        { title: 'Vendeur', field: 'operator', class: 'b--capitalized' },
+                        { title: 'Valeur', field: 'amount', type: 'price', class: 'b-table__numeric-cell' }
                     ]"
                     :data="displayedHistory"
                     :paging="10">
                 </b-table>
-            </div>
+            </section>
         </div>
     </div>
 </template>
@@ -58,7 +58,7 @@ export default {
                     amount  : transaction.amount,
                     point   : transaction.point,
                     type    : this.translation(transaction.type),
-                    operator: `Opérateur ${transaction.seller.firstname} ${transaction.seller.lastname}`
+                    operator: `${transaction.seller.firstname} ${transaction.seller.lastname}`
                 };
 
                 if (transaction.isCanceled) {

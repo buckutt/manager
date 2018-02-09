@@ -1,63 +1,54 @@
 <template>
     <div>
-        <transition name="fade">
-            <div class="b-table">
-                <div class="b-table__paging" v-if="paging">
-                    Afficher <select v-model="chosenPaging"><option v-for="option in pagingOptions">{{ option }}</option></select> entrées
+        <div class="b-table-wrapper" v-if="displayedData.length > 0">
+            <div class="b-table-wrapper__paging" v-if="paging">
+                Afficher <select v-model="chosenPaging"><option v-for="option in pagingOptions">{{ option }}</option></select> entrées
+            </div>
+            <div class="b-table" :class="hasFooter">
+                <div class="b-table__header">
+                    <div class="b-table__row b-table__header-row">
+                        <div class="b-table__cell b-table__header-cell" :class="header.class" v-for="header in headers">
+                            {{ header.title }}
+                        </div class="b-table__cell b-table__header-cell">
+                    </div class="b-table__row">
+                </div class="b-table__header">
+                <div class="b-table__body">
+                    <div class="b-table__row" v-for="data in displayedData">
+                        <div v-for="header in headers" class="b-table__cell" :class="header.class">
+                            <span v-if="header.type === 'price'">
+                                {{ lodget(data, header.field) | price(true) }}
+                            </span>
+                            <span v-else-if="header.type === 'date'">
+                                {{ lodget(data, header.field) | date }}
+                            </span>
+                            <span v-else>
+                                {{ lodget(data, header.field) }}
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <div class="b-responsive-table">
-                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp b--fullwidth" v-if="displayedData.length > 0">
-                        <thead>
-                            <tr>
-                                <th v-for="header in headers" class="mdl-data-table__cell--non-numeric">
-                                    {{ header.title }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(data, index) in displayedData">
-                                <td v-for="(header, index2) in headers" class="mdl-data-table__cell--non-numeric" :class="header.class">
-                                    <template v-if="data.warning && index2 === 0">
-                                        <mdl-tooltip :target="data.id" v-html="data.warning" class="b--uncapitalize"></mdl-tooltip>
-                                        <i :id="data.id" class="material-icons b-table__warning">warning</i>
-                                    </template>
-                                    <template v-if="header.type">
-                                        <span v-if="header.type === 'price'">{{ lodget(data, header.field) | price(true) }}</span>
-                                        <span v-if="header.type === 'date'">{{ lodget(data, header.field) | date }}</span>
-                                        <span v-if="header.type === 'checkbox'">
-                                            <mdl-checkbox :value="lodget(data, header.field)" disabled></mdl-checkbox>
-                                        </span>
-                                    </template>
-                                    <span v-else>{{ lodget(data, header.field) }}</span>
-                                    <ul v-if="header.list" class="b-table__list">
-                                        <li v-for="article in lodget(data, header.list)">{{ article }}</li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tfoot v-if="pagesNumber > 1">
-                            <tr>
-                                <td :colspan="columnsNumber">
-                                    <div class="b--center b--fullwidth b-table__pages">
-                                        <span>
-                                            Affichage de {{ displayedData.length }} éléments sur {{ filteredData.length }}
-                                        </span>
-                                        <span>
-                                            <a href="#" @click.prevent="previous()" :class="{ 'b-table__visible': isPrevious }">Précedent</a>
-                                            Page {{ adjustedPage }}/{{ pagesNumber }}
-                                            <a href="#" @click.prevent="next()" :class="{ 'b-table__visible': isNext }">Suivant</a>
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                <div class="b-table__footer" v-if="pagesNumber > 1">
+                    <div class="b-table__row">
+                        <div class="b-table__cell">
+                            <span>
+                                Affichage de {{ displayedData.length }} éléments sur {{ filteredData.length }}
+                            </span>
+                            <div class="b-space" />
+                            <span>
+                                <a href="#" @click.prevent="previous()" v-show="hasPrevious">Précedent</a>
+                                Page {{ adjustedPage }}/{{ pagesNumber }}
+                                <a href="#" @click.prevent="next()" v-show="hasNext">Suivant</a>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </transition>
-        <transition name="fade">
-            <p v-if="displayedData.length === 0">Aucune donnée à afficher.</p>
-        </transition>
+        </div>
+
+        <div class="b-table__empty-content" v-else>
+            Aucune donnée à afficher<br/>
+            <router-link tag="button" to="/reload" class="mdc-button mdc-button--raised">Recharger mon compte</router-link>
+        </div>
     </div>
 </template>
 
@@ -96,13 +87,13 @@ export default {
 
     methods: {
         previous() {
-            if (this.isPrevious) {
+            if (this.hasPrevious) {
                 this.page = this.adjustedPage - 1;
             }
         },
 
         next() {
-            if (this.isNext) {
+            if (this.hasNext) {
                 this.page += 1;
             }
         },
@@ -170,18 +161,22 @@ export default {
             return Math.ceil(this.filteredData.length / this.chosenPaging);
         },
 
-        isPrevious() {
+        hasPrevious() {
             if (this.adjustedPage - 1 > 0) {
                 return true;
             }
             return false;
         },
 
-        isNext() {
+        hasNext() {
             if (this.adjustedPage + 1 <= this.pagesNumber) {
                 return true;
             }
             return false;
+        },
+
+        hasFooter() {
+            return this.pagesNumber > 1 ? '' : 'b-table--without-footer';
         },
 
         adjustedPage() {
@@ -195,47 +190,78 @@ export default {
 };
 </script>
 
-<style>
-    .b-table__paging {
-        width: 100%;
-        text-align: right;
-        font-size: 12px;
-        margin-bottom: 5px;
+<style lang="scss">
+.b-table-wrapper__paging {
+    text-align: right;
+}
+
+.b-table {
+    margin: 8px -1rem;
+
+    &.b-table--without-footer .b-table__body .b-table__row:last-child {
+        border-bottom: 0;
+    }
+}
+
+.b-table__row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 24px;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+
+    & > .b-table__cell:first-child {
+        flex: 2;
     }
 
-    .b-table__list {
-        margin-top: 2px;
-        margin-bottom: 0px;
-        padding-left: 25px;
-        font-size: 12px;
-
-        & > li {
-            line-height: 1.2;
-        }
-    }
-
-    .b-table__warning {
-        vertical-align: middle;
-        font-size: 25px;
-        margin-right: 10px
-    }
-
-    .b-table__pages {
+    & > .b-table__cell {
+        flex: 1;
+        height: 100%;
         display: flex;
-        justify-content: space-between;
-
-        & > span {
-            & > a {
-                opacity: 0;
-                pointer-events: none;
-                text-decoration: none;
-                margin: 10px;
-
-                &.b-table__visible {
-                    opacity: 1;
-                    pointer-events: all;
-                }
-            }
-        }
+        align-items: center;
     }
+}
+
+.b-table__row:not(.b-table__header-row) {
+    height: 48px;
+
+    &:hover {
+        background-color: #eee;
+    }
+}
+
+.b-table__row > .b-table__numeric-cell {
+    text-align: right;
+    flex: 0;
+}
+
+.b-table__header-row {
+    font-weight: 600;
+    color: rgba(0,0,0,.54);
+    height: 56px;
+}
+
+.b-table__footer {
+    color: rgba(0,0,0,.54);
+
+    & .b-table__row {
+        border-bottom: none;
+    }
+
+    & .b-table__cell {
+        display: flex;
+    }
+
+    & a {
+        color: #e74c3c;
+        text-decoration: none;
+    }
+}
+
+.b-table__empty-content {
+    text-align: center;
+
+    & > button {
+        margin: 10px 0;
+    }
+}
 </style>

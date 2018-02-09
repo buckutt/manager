@@ -9,41 +9,39 @@ export function searchUsers({ commit }, name) {
 }
 
 export function transfer({ dispatch }, data) {
-    return new Promise((resolve, reject) => {
-        let message = '';
+    let message = '';
 
-        if (data.currentPin.length !== 4) {
-            message = 'L\'ancien code est faux';
-        }
+    if (data.currentPin.length !== 4) {
+        message = 'L\'ancien code est faux';
+    }
 
-        if (!data.user) {
-            message = 'Merci de sélectionner un utilisateur';
-        }
+    if (!data.user) {
+        message = 'Merci de sélectionner un utilisateur';
+    }
 
-        if (!data.amount || Number.isNaN(data.amount)) {
-            message = 'Le montant doit être un nombre';
-        }
+    if (!data.amount || Number.isNaN(data.amount)) {
+        message = 'Le montant doit être un nombre';
+    }
 
-        if (message) {
-            return reject(new Error(message));
-        }
+    if (message) {
+        throw new Error(message);
+    }
 
-        const transferData = {
-            currentPin : data.currentPin,
-            amount     : +(+data.amount * 100).toFixed(1),
-            reciever_id: data.user.id
-        };
+    const transferData = {
+        currentPin : data.currentPin,
+        amount     : +(+data.amount * 100).toFixed(1),
+        reciever_id: data.user.id
+    };
 
-        post('transfer', transferData)
-            .then((result) => {
-                if (!result.newCredit) {
-                    return reject(new Error(result.message));
-                }
+    return post('transfer', transferData)
+        .then((result) => {
+            if (!result.newCredit) {
+                throw new Error(result.message);
+            }
 
-                // Reload full history
-                dispatch('loadHistory');
+            // Reload full history
+            dispatch('loadHistory');
 
-                resolve({ message: 'Le virement a bien été effectué' });
-            });
-    });
+            return { message: 'Le virement a bien été effectué' };
+        });
 }

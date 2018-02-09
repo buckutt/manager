@@ -1,5 +1,5 @@
 <template>
-    <header class="b-header">
+    <header class="b-header" :class="headerClass">
         <h1>{{ barName }}</h1>
         <div class="b-header__credit" v-if="loggedUser">
             Mon solde :<br/>
@@ -43,6 +43,10 @@ export default {
             logged    : state => !!state.app.loggedUser
         }),
 
+        headerClass() {
+            return this.loggedUser ? 'b-header--logged' : '';
+        },
+
         barName() {
             return process.env.name;
         },
@@ -76,7 +80,11 @@ export default {
 
 <style>
     .b-header {
-        background-color: #34495E;
+        background-color: #34495e;
+
+        &.b-header--logged {
+            padding-bottom: 1rem;
+        }
 
         & > h1 {
             color: #fff;
@@ -115,7 +123,6 @@ export default {
         & .b-header__navigation {
             display: flex;
             justify-content: center;
-            margin-bottom: 1rem;
 
             > a {
                 text-decoration: none;
@@ -123,7 +130,7 @@ export default {
                 flex-direction: column;
                 align-items: center;
                 cursor: pointer;
-                color: #fff;
+                color: rgba(255,255,255,.6);
                 padding: 0 1rem;
                 min-width: 100px;
 
@@ -132,8 +139,8 @@ export default {
                 }
 
                 &.b--active {
-                    color: #e74c3c;
-                    font-weight: bold;
+                    color: #fff;
+                    font-weight: 500;
                 }
 
                 > i {
