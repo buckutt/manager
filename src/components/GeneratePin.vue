@@ -88,9 +88,9 @@ export default {
                     this.notify(message);
                     this.$router.push('/');
                 })
-                .catch(error => {
+                .catch((error) => {
                     this.loading = false;
-                    this.notify(error)
+                    this.notify(error);
                 });
         }
     },
