@@ -60,11 +60,7 @@ main > div:first-child {
 }
 
 .mdc-button.mdc-button--raised {
-    color: #fff;
-}
-
-.mdc-button:not(.mdc-button--raised) {
-    color: #3c6382;
+    color: #fff !important;
 }
 
 label.mdc-text-field {

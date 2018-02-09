@@ -64,7 +64,6 @@ $mdc-theme-primary: #27ae60;
 </style>
 
 <style>
-
     main.mdl-layout__content {
         overflow: visible;
     }
