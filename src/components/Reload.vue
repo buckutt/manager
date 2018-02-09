@@ -96,7 +96,9 @@ export default {
 <style>
     .b-reload__boxes {
         width: 100%;
-        text-align:center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: 10px 0px;
 
         & > button {
