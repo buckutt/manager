@@ -85,10 +85,13 @@ export default {
             this.loading = true;
             this.askPin(mail)
                 .then((message) => {
-                    this.loading = false;
                     this.notify(message);
+                    this.$router.push('/');
                 })
-                .catch(error => this.notify(error));
+                .catch(error => {
+                    this.loading = false;
+                    this.notify(error)
+                });
         }
     },
 
