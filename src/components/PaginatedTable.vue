@@ -27,19 +27,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="b-table__footer" v-if="pagesNumber > 1">
-                    <div class="b-table__row">
-                        <div class="b-table__cell">
-                            <span>
-                                Affichage de {{ displayedData.length }} éléments sur {{ filteredData.length }}
-                            </span>
-                            <div class="b-space" />
-                            <span>
-                                <a href="#" @click.prevent="previous()" v-show="hasPrevious">Précedent</a>
-                                Page {{ adjustedPage }}/{{ pagesNumber }}
-                                <a href="#" @click.prevent="next()" v-show="hasNext">Suivant</a>
-                            </span>
-                        </div>
+            </div>
+            <div class="b-table__footer" v-if="pagesNumber > 1">
+                <div class="b-table__row">
+                    <div class="b-table__cell">
+                        <span>
+                            Affichage de {{ displayedData.length }} éléments sur {{ filteredData.length }}
+                        </span>
+                        <div class="b-space" />
+                        <span>
+                            <a href="#" @click.prevent="previous()" v-show="hasPrevious">Précedent</a>
+                            Page {{ adjustedPage }}/{{ pagesNumber }}
+                            <a href="#" @click.prevent="next()" v-show="hasNext">Suivant</a>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -196,11 +196,18 @@ export default {
 }
 
 .b-table {
-    margin: 8px -1rem;
+    margin: 8px -1rem 0 -1rem;
+    overflow-x: auto;
 
     &.b-table--without-footer .b-table__body .b-table__row:last-child {
         border-bottom: 0;
     }
+}
+
+.b-table__header,
+.b-table__body,
+.b-table__footer {
+    min-width: 570px;
 }
 
 .b-table__row {

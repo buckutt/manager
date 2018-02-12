@@ -109,5 +109,6 @@ export default {
 
 .b-autocomplete .mdc-list-item {
     cursor: pointer;
+    text-transform: capitalize;
 }
 </style>

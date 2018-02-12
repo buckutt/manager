@@ -3,7 +3,7 @@ import { get, post } from '../../lib/fetch';
 export function searchUsers({ commit }, name) {
     const strName = encodeURIComponent(name);
 
-    get(`searchuser?name=${strName}`).then((users) => {
+    get(`searchuser?name=${strName}&limit=15`).then((users) => {
         commit('CHANGEUSERS', users);
     });
 }
